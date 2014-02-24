@@ -1,0 +1,48 @@
+<div id="adjust-payments">
+	<h1>Warning!</h1>
+	<h3>You are updating a contract and in doing so you are either changing the term or the payment schedule.</h3>
+	
+	<div class="current-payments">
+		<h2>Current payments:</h2>
+		<h5>You can keep these if you want</h5>
+		<% form_for(@contract, :url => update_payments_contract_path(@contract)) do |f| %>
+			
+			<%= f.hidden_field :contract_name, :value => @contract.contract_name_was %>
+			<%= f.hidden_field :start_date, :value => @contract.start_date_was %>
+			<%= f.hidden_field :end_date, :value => @contract.end_date_was %>
+			<%= f.hidden_field :renewal_type, :value => @contract.renewal_type_was %>
+			<%= f.hidden_field :value, :value => @contract.value_was %>
+			<%= f.hidden_field :paid, :value => @contract.paid_was %>
+			
+			<ul>
+				<%= @contract.payments.order("due_at").collect { |p| "<li#{display_class(p)}>#{p.due_at.strftime('%a, %d %B, %Y')}#{p.status}</li>".html_safe unless p.new_record? }.join.html_safe %>
+			</ul>
+			<p><%= f.submit "Keep these payments" %></p>
+		<% end %>
+	</div>
+	
+	<div class="new-payments">
+		<h2>New payments:</h2>
+		<h5>Check the payments that are already paid for.</h5>
+		<% form_for @contract, :url => update_payments_contract_path(@contract) do |f| %>
+			
+			<%= f.hidden_field :contract_name, :value => @contract.contract_name %>
+			<%= f.hidden_field :start_date, :value => @contract.start_date %>
+			<%= f.hidden_field :end_date, :value => @contract.end_date %>
+			<%= f.hidden_field :renewal_type, :value => @contract.renewal_type %>
+			<%= f.hidden_field :value, :value => @contract.value %>
+			<%= f.hidden_field :paid, :value => @contract.paid %>
+			
+			<ul>
+				<% f.fields_for :payments do |p| %>
+					<% unless p.object.new_record? %>
+						<%= p.hidden_field :_destroy, :value => true %>
+					<% else %>
+						<li><%= p.check_box :paid %> <%= p.object.due_at.strftime('%a, %d %B, %Y') %> <%= p.hidden_field :paid_at, :value => Date.today %><%= p.hidden_field :due_at, :value => p.object.due_at %></li>
+					<% end %>
+				<% end %>
+			</ul>
+			<p><%= f.submit "Use these new payments" %></p>
+		<% end %>
+	</div>
+</div>

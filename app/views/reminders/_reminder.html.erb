@@ -1,0 +1,19 @@
+<div class="issue">
+  <p><%= reminder.client.company %> | <%= reminder.description %></p>
+  <p class="minor"><%= "<em>Invoiced</em> | ".html_safe if reminder.invoiced %><%= link_to 'Edit or renew', edit_reminder_path(reminder) %>, <%= reminder.invoiced || reminder.paid ? "<span>mark as invoiced</span>".html_safe : link_to('mark as invoiced', invoiced_reminder_path(reminder)).html_safe %> or <%= reminder.paid ? "<span>mark as paid</span>".html_safe : link_to('mark as paid', paid_reminder_path(reminder)).html_safe %></p>
+
+  <div class="status">
+    <% if reminder.paid? %>
+      <h2 class="<%= reminder.class_state %>">Paid</h2>
+    <% elsif reminder.invoiced? %>
+      <h2 class="<%= reminder.class_state %>">Invoiced</h2>
+    <% else %>
+      <h2 class="<%= reminder.class_state %>">New</h2>
+    <% end %>
+  </div>
+
+  <div class="assignments">
+    <p>Due: <%= reminder.end_date.strftime("%d %b, %Y") %></p>
+    <p>Amount: <%= number_to_currency(reminder.value, :locale => :gb, :unit => "&pound;") %></p>
+  </div>
+</div>

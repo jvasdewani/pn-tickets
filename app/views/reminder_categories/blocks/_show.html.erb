@@ -1,0 +1,22 @@
+<div id="category-show">
+	<h1><%= @category.category_name %> reminders</h1>
+	<% unless @overdue.length == 0 %>
+		<div class="overdue">
+			<div class="title">
+				<h3><%= pluralize @overdue.length, 'Overdue reminder' %></h3>
+			</div>
+			<%= render @overdue %>
+		</div>
+	<% end %>
+	<% unless @upcoming.length == 0 %>
+		<div class="upcoming">
+			<div class="title">
+				<h3><%= pluralize @upcoming.length, 'Upcoming reminder' %></h3>
+			</div>
+			<%= render @upcoming %>
+		</div>
+	<% end %>
+	<% if @overdue.empty? && @upcoming.empty? %>
+		<p>There are no expired or upcoming service reminders.</p>
+	<% end %>
+</div>

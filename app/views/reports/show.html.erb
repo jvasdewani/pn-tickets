@@ -1,0 +1,21 @@
+<%= page_title "All tickets" %>
+
+<div class="page_head">
+	<h1>Search Results</h1>
+</div>
+
+<div class="issues list">
+	<h1><%= @issues.length %> Matching Tickets</h1>
+	
+	<div class="issues">
+		<% unless @issues.empty? %>
+			<%= render @issues %>
+    <% end %>
+    <p class="pdf"><%= link_to "Printable Report (PDF)", search_path(@search, :format => "pdf") %><span>Download a copy of this report in PDF format for future reference</span></p>
+	</div>
+	
+	<div class="sidebar">
+    <h2><%= link_to "Create a new ticket", new_issue_path %></h2>
+    <%= render :partial => 'searches/form' %> 
+  </div>
+</div>

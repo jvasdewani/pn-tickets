@@ -1,0 +1,85 @@
+<%= page_title "New ticket" %>
+
+<div class="page_head">
+  <h1>New ticket</h1>
+</div>
+<div class="new issue">
+  <%= form_for @issue, html: { multipart: true } do |f| %>
+    <%= f.fields_for :comments do |c| %>
+      <fieldset>
+        <div class="field">
+          <%= f.label :subject, "What is the subject of this ticket <em>(e.g. Issue with email)</em>".html_safe %>
+          <%= f.text_field :subject %>
+        </div>
+
+        <div class="field">
+          <%= c.label :content, "Description of the problem <em>Please give as much detail as possible</em>".html_safe %>
+          <%= c.text_area :content %>
+
+          <%= c.hidden_field :_ps, :value => 40 %>
+          <%= c.hidden_field :_ns, :value => 40 %>
+          <%= c.hidden_field :created_at, :value => Time.now %>
+        </div>
+
+        <div class="field">
+          <%= c.label :attachment, "Attachment <em>Include a screengrab or file</em>".html_safe %>
+          <%= c.file_field :attachment %>
+        </div>
+      </fieldset>
+
+      <div class="field bordered" data-observe="department_select">
+        <h3>Who is responsible for this ticket?</h3>
+        <h5>Please select the person in your teams that will be responsible for this ticket.</h5>
+        <p><%= f.label :department_id, 'Department:' %> <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name), :prompt => 'Select one' %></p>
+        <%= f.hidden_field :person_id, :value => current_person.id %>
+        <%# <p><%= f.label :person_id, 'Agent:' %1> <%= f.select :person_id, options_from_collection_for_select(Person.ordered, :id, :abbr_name), :prompt => 'No-one' %1></p> %>
+      </div>
+
+      <div class="field bordered" data-observe="client_select">
+        <h3>Who is reporting this ticket?</h3>
+        <h5>Select the client who has reported this issue...</h5>
+        <%= f.select :client_id, "<option value>Select a client...</option>".html_safe + options_from_collection_for_select(Client.ordered.collect { |client| client if client.active_client }.compact, :id, :company, :selected => @issue.client_id) %> <span id="loader" style="display: none;"><%= image_tag 'loader.gif' %></span>
+      </div>
+
+      <% if @issue.client_id.present? %>
+        <div class="field bordered client_user" data-observe="branch_select" style="display: block;">
+          <% @client = Client.find(@issue.client_id) %>
+          <%= render :partial => 'clients/client_users' %>
+        </div>
+      <% else %>
+        <div class="field bordered client_user" data-observe="branch_select"></div>
+      <% end %>
+
+      <div class="field bordered" data-observe="client_select">
+        <h3>Product type?</h3>
+        <h5>What does this issue relate to...</h5>
+        <%= f.select :product_type_id, "<option value>Select a product...</option>".html_safe + options_from_collection_for_select(ProductType.ordered, :id, :name, :selected => @issue.product_type_id) %>
+      </div>
+
+      <div class="field">
+        <h3>What is the priority for this ticket?</h3>
+        <h5>Higher priority tickets will appear higher in the agent's lists.</h5>
+        <p><%= c.label :_np, "This ticket is" %> <%= c.select :_np, options_for_select([['Critical', 40], ['High', 30], ['Low', 10], ['Normal', 20] ], 20) %></p>
+      </div>
+    <% end %>
+    <p class="button"><%= f.submit 'Create ticket', :disable_with => "Creating ticket..." %> <% if session[:referer].blank? %><%= link_to 'Cancel', '/' %><% else %><%= link_to 'Cancel', session[:referer] %><% end %></p>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#issue_department_id").change(function () {
+        if (this.value == '5') {
+        $("#issue_product_type_id")
+            .find("option")
+            .show()
+            .not("option[value='1']").hide();
+        }
+        else
+        {
+            $('#issue_product_type_id').find("option").show();
+        }
+
+    }).change();
+  });
+</script>

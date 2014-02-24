@@ -1,0 +1,15 @@
+<%= page_title "New client" %>
+
+<div class="page_head">
+	<h1>New Client</h1>
+</div>
+
+<div class="new client">
+	<%= nested_form_for @client do |f| %>
+		<%= render :partial => 'form', :locals => { :f => f } %>
+		<p class="button"><%= f.submit "Create client", :disable_with => 'Creating new client' %> <%= link_to "Cancel", clients_path %></p>
+	<% end %>
+  <%= content_for :branches_fields_template %>
+  <%= content_for :contacts_fields_template %>
+
+</div>

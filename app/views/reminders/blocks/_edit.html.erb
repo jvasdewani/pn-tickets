@@ -1,0 +1,32 @@
+<div id="new-reminder">
+	<h1>Edit reminder</h1>
+	
+	<% form_for @reminder do |f| %>
+		
+		<div class="field">
+			<%= f.label :description, "Enter description for this reminder" %>
+			<%= f.text_field :description %>
+		</div>
+		<div class="field">
+			<%= f.label :end_date, "Date for this reminder" %>
+			<div class="end_date_selector">
+				<%= f.date_select :end_date, :order => [ :day, :month, :year ] %>
+			</div>
+		</div>
+		<div class="field">
+			<%= f.label :reminder_category_id, "Category" %>
+			<%= f.select :reminder_category_id, options_from_collection_for_select(@current_account.reminder_categories, :id, :category_name) %>
+		</div>
+		<div class="field">
+			<%= f.label :value, "Value of reminder" %>
+			<%= f.text_field :value, :placeholder => '100.00' %>
+		</div>
+		<%= f.hidden_field :invoiced, :value => false %>
+		<%= f.hidden_field :paid, :value => false %>
+		
+		<div class="submission">
+			<p><%= f.submit 'Save changes' %> or <%= link_to 'Cancel', :back %></p>
+		</div>
+	<% end %>
+	
+</div>

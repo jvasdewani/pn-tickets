@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  requirements: MyText
+  client_id: 
+  approved: false
+  goods_received: false
+  payment_received: false
+  payment_sent: false
+
+two:
+  requirements: MyText
+  client_id: 
+  approved: false
+  goods_received: false
+  payment_received: false
+  payment_sent: false

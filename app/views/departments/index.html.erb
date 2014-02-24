@@ -1,0 +1,17 @@
+<%= page_title "Manage departments" %>
+
+<div class="page_head">
+  <h1>Manage Departments</h1>
+</div>
+
+<div class="departments list">
+  <div class="departments">
+    <%= render @departments %>
+  </div>
+
+  <div class="sidebar">
+    <% if current_person.admin? %>
+      <%= link_to "Create a new department", new_department_path, class: 'cta' %>
+    <% end %>
+  </div>
+</div>

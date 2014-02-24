@@ -1,0 +1,25 @@
+<div id="category-show">
+	<h1>Reminders</h1>
+	<% @reminders.each do |group, reminders| %>
+		<div class="title">
+			<h3><%= group.category_name %></h3>
+		</div>
+		<div class="overdue">
+			<%= render reminders.select { |r| r.end_date < Date.today && r.paid == false } %>
+		</div>
+		<div class="upcoming">
+			<%= render reminders.select { |r| r.end_date <= Date.today + 14.days && r.end_date >= Date.today && r.paid == false } %>
+		</div>
+		<%= render reminders.select { |r| r.end_date > Date.today + 14.days && r.paid == false } %>
+		
+		<div class="title">
+			<h3>Completed <%= group.category_name %> reminders</h3>
+		</div>
+		<div class="paid">
+			<%= render reminders.select { |r| r.paid == true }.reverse %>
+		</div>
+	<% end %>
+	<% if @reminders.empty? %>
+		<p>There are no service reminders.</p>
+	<% end %>
+</div>

@@ -1,0 +1,28 @@
+<%= page_title "Health checks" %>
+
+<div class="page_head">
+	<h1>Health Checks</h1>
+</div>
+
+<div class="clients list">
+	<h1><%= @clients.length %> Clients</h1>
+	
+	<div class="clients">
+	  <% @clients.each do |client| %>
+	    <div class="hc_client">
+	      <h2><%= client.company %></h2>
+	      <div class="hc_date">
+          <% if client.check_date.present? %>
+            <h4><%= client.check_date %></h4>
+	        <% else %>
+	          <h4 class="null">n/a</h4>
+	        <% end %>
+	      </div>
+	    </div>
+	  <% end %>
+	</div>
+	
+	<div class="sidebar">
+    <p>&laquo; <%= link_to "Back to client list", clients_path %></p>
+	</div>
+</div>

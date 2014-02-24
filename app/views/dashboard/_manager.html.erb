@@ -1,0 +1,24 @@
+<table width="650" style="margin: 10px 20px 0;" id="numbers">
+  <thead>
+    <tr>
+      <th>Agent</th>
+      <th class="centered">Opened today</th>
+      <th class="centered">Closed today</th>
+      <th class="centered">Assigned to you</th>
+    </tr>
+  </thead>
+  <% Person.scoreboard.ordered.each do |person| %>
+    <tr>
+      <td><%= person.full_name %></td>
+      <td class="centered"><%= PersonScore.new(person.id, 'opened').score %></td>
+      <td class="centered"><%= PersonScore.new(person.id, 'closed').score %></td>
+      <td class="centered"><%= person.issues.active.count %></td>
+    </tr>
+  <% end %>
+  <tr>
+    <td>Unassigned</td>
+    <td class="centered">0</td>
+    <td class="centered">0</td>
+    <td class="centered"><%= Issue.where(:person_id => nil).active.count %></td>
+  </tr>
+</table>

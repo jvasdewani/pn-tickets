@@ -1,0 +1,20 @@
+<%= page_title 'Reminders' %>
+
+<div class="page_head">
+  <h1>Reminders</h1>
+</div>
+
+<div class="issues list">
+  <div class="issues">
+    <%= render @reminders %>
+  </div>
+	<% if @reminders.empty? %>
+		<p>There are no service reminders.</p>
+	<% end %>
+
+  <div class="sidebar">
+    <%= link_to 'Add a new contract', new_contract_path, :class => 'cta' %><br /><br />
+    <%= link_to 'Add a new reminder', new_reminder_path, :class => 'cta' %><br /><br />
+    <%= link_to 'Add a new PO', new_payment_order_path, :class => 'cta' %><br /><br />
+  </div>
+</div>

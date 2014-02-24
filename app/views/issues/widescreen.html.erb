@@ -1,0 +1,19 @@
+<%= page_title 'Scoreboard' %>
+
+<h1><%= Time.now.strftime("%H:%M%P %d %B %Y") %></h1>
+
+<% @agents.each do |agent| %>
+  <div class="agent">
+    <h3><%= agent.abbr_name %></h3>
+
+    <div class="left">
+      <h4>Opened</h4>
+      <h2><%= PersonScore.new(agent.id, 'opened').score %></h2>
+    </div>
+
+    <div class="right">
+      <h4>Closed</h4>
+      <h2><%= PersonScore.new(agent.id, 'closed').score %></h2>
+    </div>
+  </div>
+<% end %>

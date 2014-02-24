@@ -1,0 +1,71 @@
+<div id="new-contract">
+	<h1>Add a new PO</h1>
+
+	<% form_for @payment_order do |f| %>
+
+		<% if @company.present? %>
+			<div class="field">
+				<%= f.label :company_id, 'Client' %>
+				<%= f.hidden_field :company_id, :value => @company.id %>
+				<input type="text" disabled="disabled" value="<%= @company.company_name %>">
+			</div>
+		<% else %>
+			<div class="field">
+				<%= f.label :company_id, 'Client' %>
+				<%= f.select :company_id, options_from_collection_for_select(@current_account.companies.order(:company_name), :id, :company_name) %>
+			</div>
+		<% end %>
+
+		<%= f.hidden_field :initials, :value => "#{@current_user.forename.first}#{@current_user.surname.first}" %>
+
+		<div class="field">
+			<%= f.label :carriage_sale %>
+			<%= f.text_field :carriage_sale %>
+    </div>
+
+		<div class="field">
+			<%= f.label :product_sale %>
+			<%= f.text_field :product_sale %>
+    </div>
+
+		<div class="field">
+			<%= f.label :supplier_name %>
+			<%= f.text_field :supplier_name %>
+		</div>
+
+		<div class="field">
+			<%= f.label :supplier_invoice_number %>
+			<%= f.text_field :supplier_invoice_number %>
+    </div>
+
+		<div class="field">
+			<%= f.label :cost %>
+			<%= f.text_field :cost %>
+		</div>
+
+		<div class="field">
+			<%= f.label :cost_of_carriage %>
+			<%= f.text_field :cost_of_carriage %>
+		</div>
+
+		<div class="field">
+			<%= f.label :product_description %>
+			<%= f.text_field :product_description %>
+		</div>
+
+		<div class="field">
+			<%= f.label :notes %>
+			<%= f.text_field :notes %>
+		</div>
+
+		<div class="field">
+			<%= f.label :nominal_code %>
+			<%= f.select :nominal_code, options_for_select(['4020 - Leased Line','4110 - Mobile One-offs','4200 - Telephone Hardware & Software','4210 - Telephony Engineering','4300 - IT Support','4310 - Offsite Back-up','4315 - Antispam','4320 - Other IT Hosted Services','4330 - IT Hardware & Software','4340 - IT Engineering','4420 - Commission Received','4500 - Carriage','4501 - Commitment Charges']) %>
+		</div>
+		
+		<div class="submission">
+			<p><%= f.submit 'Create new PO' %> or <%= link_to 'Cancel', payment_orders_path %></p>
+		</div>
+	<% end %>
+	
+</div>

@@ -1,0 +1,62 @@
+<%= page_title "Ticket ##{@issue.issue_no}" %>
+
+<div class="page_head">
+  <h1>Ticket: <%= @issue.subject %></h1>
+</div>
+
+<div class="issue_head <%= @issue.humane_status %>">
+  <div class="bordered ticket">
+    <h5>Ticket #</h5>
+    <h2><%= @issue.issue_no %></h2>
+  </div>
+  <div class="bordered status">
+    <h5>Status</h5>
+    <h2><%= @issue.humane_status.titleize %></h2>
+  </div>
+  <div class="bordered priority">
+    <h5>Priority</h5>
+    <h2><%= @issue.priority.titleize %></h2>
+  </div>
+
+  <h5>Department</h5>
+  <h2><%= @issue.department.department_name unless @issue.department.nil? %> <%= "(#{@issue.product_type.name})" unless @issue.product_type.nil? %></h2>
+
+  <div class="assignment">
+    <p><%= ticket_assignment @issue %></p>
+    <p>Ticket time: <strong><%= time_display @issue.issue_time %></strong></p>
+  </div>
+</div>
+
+<div class="issue_display">
+
+  <div class="comments">
+    <%= render @issue.comments.ordered %>
+  </div>
+
+    <% if @issue.task_list.present? && !@issue.task_list.tasks.empty? %>
+      <div class="task_list">
+        <h3>Confirmation task list</h3>
+        <h5>To mark this ticket as complete please ensure you have completed the following tasks</h5>
+        <ul>
+          <% @issue.task_list.tasks.each do |task| %>
+            <% if @issue.checklist.blank? %>
+              <input type="hidden" name="issue[checklist][<%= task.id %>]" value="0">
+              <li><label><input type="checkbox" name="issue[checklist][<%= task.id %>]" value="1"> <%= task.task_name %></label></li>
+            <% else %>
+              <% if @issue.checklist.has_key?(task.id) && @issue.checklist[task.id] %>
+                <input type="hidden" name="issue[checklist][<%= task.id %>]" value="0">
+                <li><label><input type="checkbox" name="issue[checklist][<%= task.id %>]" value="1" checked="checked"> <%= task.task_name %></label></li>
+              <% else %>
+                <input type="hidden" name="issue[checklist][<%= task.id %>]" value="0">
+                <li><label><input type="checkbox" name="issue[checklist][<%= task.id %>]" value="1"> <%= task.task_name %></label></li>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+  <div class="sidebar">
+    <% if session[:referer].blank? %><%= link_to 'Back', '/issues', class: 'cta' %><% else %><%= link_to 'Back', session[:referer], class: 'cta' %><% end %><br /><br />
+  </div>
+</div>

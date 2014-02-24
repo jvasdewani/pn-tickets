@@ -1,0 +1,12 @@
+<%= page_title "New agent" %>
+
+<div class="page_head">
+	<h1>New Agent</h1>
+</div>
+
+<div class="new person">
+	<%= nested_form_for @person do |f| %>
+		<%= render :partial => 'form', :locals => { :f => f } %>
+		<p class="button"><%= f.submit "Create agent", :disable_with => 'Creating new agent' %> <%= link_to "Cancel", people_path %></p>
+	<% end %>
+</div>

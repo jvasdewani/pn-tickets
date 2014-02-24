@@ -1,0 +1,12 @@
+<%= page_title "Edit Client" %>
+
+<div class="page_head">
+	<h1>Edit Client</h1>
+</div>
+
+<div class="edit client">
+	<%= nested_form_for @client do |f| %>
+		<%= render :partial => 'form', :locals => { :f => f } %>
+		<p class="button"><%= f.submit "Save changes", :disable_with => 'Saving changes' %> <%= link_to "Cancel", clients_path %></p>
+	<% end %>
+</div>

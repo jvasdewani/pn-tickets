@@ -1,0 +1,10 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+#  database: tickets_development
+  database: nitin_pn-tickets
+  pool: 5
+  username: root
+  password: vi156vi
+  socket: /var/run/mysqld/mysqld.sock
+

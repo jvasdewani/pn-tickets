@@ -1,0 +1,66 @@
+<%= page_title 'Edit PO' %>
+
+<div class="page_head">
+  <h1>Edit PO</h1>
+</div>
+
+<div class="issue new">
+
+	<%= form_for @payment_order do |f| %>
+
+    <div class="field">
+      <%= f.label :client_id, 'Client' %>
+      <%= f.select :client_id, options_from_collection_for_select(Client.ordered, :id, :company) %>
+    </div>
+
+		<%= f.hidden_field :initials, :value => "#{current_person.forename.first}#{current_person.surname.first}" %>
+
+		<div class="field">
+			<%= f.label :carriage_sale %>
+			<%= f.text_field :carriage_sale %>
+    </div>
+
+		<div class="field">
+			<%= f.label :product_sale %>
+			<%= f.text_field :product_sale %>
+    </div>
+
+		<div class="field">
+			<%= f.label :supplier_name %>
+			<%= f.text_field :supplier_name %>
+		</div>
+
+		<div class="field">
+			<%= f.label :supplier_invoice_number %>
+			<%= f.text_field :supplier_invoice_number %>
+    </div>
+
+		<div class="field">
+			<%= f.label :cost %>
+			<%= f.text_field :cost %>
+		</div>
+
+		<div class="field">
+			<%= f.label :cost_of_carriage %>
+			<%= f.text_field :cost_of_carriage %>
+		</div>
+
+		<div class="field">
+			<%= f.label :product_description %>
+			<%= f.text_field :product_description %>
+		</div>
+
+		<div class="field">
+			<%= f.label :notes %>
+			<%= f.text_field :notes %>
+		</div>
+
+		<div class="field">
+			<%= f.label :nominal_code %>
+			<%= f.select :nominal_code, options_for_select(['4020 - Leased Line','4110 - Mobile One-offs','4200 - Telephone Hardware & Software','4210 - Telephony Engineering','4300 - IT Support','4310 - Offsite Back-up','4315 - Antispam','4320 - Other IT Hosted Services','4330 - IT Hardware & Software','4340 - IT Engineering','4420 - Commission Received','4500 - Carriage','4501 - Commitment Charges']) %>
+		</div>
+		
+		<p class="button"><%= f.submit 'Save changes' %> or <%= link_to 'Cancel', payment_orders_path %></p>
+	<% end %>
+	
+</div>

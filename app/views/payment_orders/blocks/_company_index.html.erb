@@ -1,0 +1,24 @@
+<div id="contract-list">
+	<h1>Contract renewals</h1>
+	<div class="overdue">
+		<%= render @contracts.select { |c| c.end_date < Date.today && c.paid == false } %>
+	</div>
+	
+	<div class="upcoming">
+		<%= render @contracts.select { |c| c.end_date <= Date.today + 4.weeks && c.end_date >= Date.today && c.paid == false } %>
+	</div>
+	
+	<%= render @contracts.select { |c| c.end_date > Date.today + 4.weeks && c.paid == false } %>
+	
+	<div class="title">
+		<h3>Completed contracts</h3>
+	</div>
+	
+	<div class="paid">
+		<%= render @contracts.select { |c| c.paid == true }.reverse %>
+	</div>
+	
+	<% if @contracts.empty? %>
+		<p>There are no expired or upcoming service contract renewals.</p>
+	<% end %>
+</div>

@@ -1,0 +1,33 @@
+<table width="650" style="margin: 10px 20px 0;">
+  <tr>
+    <td style="text-align: center; font-size: 13px; color: #aaa;">Opened today</td>
+    <td style="text-align: center; font-size: 13px; color: #aaa;">Closed today</td>
+    <td style="text-align: center; font-size: 13px; color: #aaa;">Assigned to you</td>
+  </tr>
+  <tr>
+    <td style="text-align: center; font-size: 30px; font-weight: bold;">
+      <%= link_to current_person.issues.opened.size, issues_status_path('opened') %>
+    </td>
+    <td style="text-align: center; font-size: 30px; font-weight: bold;">
+      <%= link_to current_person.issues.closed.size, issues_status_path('closed') %>
+    </td>
+    <td style="text-align: center; font-size: 30px; font-weight: bold;">
+        <%= link_to current_person.issues.active.size, issues_status_path('active') %></td>
+  </tr>
+</table>
+
+<h1><%= @issues.length %> Matching Tickets</h1>
+
+<div class="issues">
+  <% if current_person.admin? %>
+    <%= form_for @bulk_edit do |f| %>
+      <%= render partial: 'issues/issue', collection: @issues, locals: { f: f} %>
+      <div class="field">
+        <p>Update selected tickets as: <%= f.select :status, [['Open',30],['On Hold',20],['Resolved',10]] %> with the comment: <%= f.text_field :message %> <%= f.submit 'Update tickets' %></p>
+        <%= f.hidden_field :person, value: current_person.id %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= render @issues %>
+  <% end %>
+</div>

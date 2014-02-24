@@ -1,0 +1,16 @@
+<%= div_for issue_list do %>
+<p>#<%= issue_list.issue_no %> <%= link_to issue_list.subject, show_ticket_path(issue_list.id) %></p>
+<p class="minor"><%= (issue_list.client.nil? ? '' : issue_list.client.company) %> | ticket: <%= time_display issue_list.issue_time %> | response: <%= time_display issue_list.response_time %></p>
+
+<div class="status">
+  <h2 class="<%= issue_list.humane_status %>"><%= issue_list.humane_status.titleize %></h2>
+  <h3 class="<%= issue_list.priority %>"><%= issue_list.priority.titleize %></h3>
+</div>
+
+<div class="assignments">
+  <p><%= ticket_department issue_list, false %></p>
+  <p><%= ticket_product issue_list, false %></p>
+  <p><%= ticket_assignment issue_list %></p>
+</div>
+<% end %>
+

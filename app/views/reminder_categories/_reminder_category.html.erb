@@ -1,0 +1,7 @@
+<%= div_for reminder_category, class: 'person' do %>
+	<h2><%= reminder_category.category_name %></h2>
+
+  <div class="controls">
+    <p><%= link_to "Edit", edit_reminder_category_path(reminder_category) %> <%= link_to "Delete", reminder_category, :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this reminder category?" %></p>
+  </div>
+<% end %>

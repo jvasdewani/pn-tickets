@@ -1,0 +1,73 @@
+<%= page_title "Quote ##{@quote.id}" %>
+
+<div class="page_head">
+  <h1>Quote</h1>
+</div>
+
+<div class="issue_head <%= @quote.status %>">
+  <div class="bordered ticket">
+    <h5>Quote #</h5>
+    <h2><%= @quote.id %></h2>
+  </div>
+  <div class="bordered status">
+    <h5>Status</h5>
+    <h2><%= @quote.status.titleize %></h2>
+  </div>
+  <div class="bordered priority">
+    <h5>Value</h5>
+    <h2><%= number_to_currency @quote.value, unit: '&pound;' %></h2>
+  </div>
+
+  <h5>Client</h5>
+  <h2><%= @quote.client.company %></h2>
+</div>
+
+<div class="issue_display">
+
+  <h1>Requested requirements</h1>
+  <%= textilize(@quote.requirements).html_safe %>
+
+  <h1>Build quote</h1>
+
+  <%= nested_form_for @quote, html: { multipart: true } do |f| %>
+    <div class="field">
+      <%= f.label :email, 'Email quote to' %>
+      <%= f.text_field :email %>
+    </div>
+
+    <%= f.fields_for :supplier_quotes %>
+    <p><%= f.link_to_add "Add another quote", :supplier_quotes %></p>
+
+    <h5>Carriage</h5>
+    <div class="field">
+      <table width="450">
+        <tr>
+          <td width="50%">
+            <%= f.label :carriage_cost %>
+            &pound; <%= f.text_field :carriage_cost, style: 'width: 150px;' %>
+          </td>
+          <td width="50%">
+            <%= f.label :carriage_sale %>
+            &pound; <%= f.text_field :carriage_sale, style: 'width: 150px;' %>
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <p class="button"><%= f.submit 'Update quote', :disable_with => "Updating quote..." %> <%= link_to 'Back', quotes_path %></p>
+  <% end %>
+
+  <div class="sidebar">
+    <%= link_to 'Back', quotes_path, class: 'cta' %>
+    <% if @quote.supplier_quotes.length > 0 %>
+      <br /><br />
+      <%= link_to 'Send for technical approval', tech_request_quote_path(@quote), class: 'cta' if @quote.new? %>
+      <%= link_to 'View technical approval', issue_path(@quote.issue), class: 'cta' if @quote.sent_for_approval? %>
+      <%= link_to 'Send for client approval', client_request_quote_path(@quote), class: 'cta' if @quote.approved? %>
+      <%= link_to 'Goods received', goods_received_quote_path(@quote), class: 'cta' if @quote.client_approved? %>
+      <%= link_to 'Payment received', payment_received_quote_path(@quote), class: 'cta' if @quote.goods_received? %>
+      <%= link_to 'Payment sent', payment_sent_quote_path(@quote), class: 'cta' if @quote.payment_received? %>
+      <%= link_to 'Complete', complete_quote_path(@quote), class: 'cta' if @quote.payment_sent? %>
+    <% end %>
+  </div>
+</div>

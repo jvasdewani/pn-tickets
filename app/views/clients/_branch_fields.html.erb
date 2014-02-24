@@ -1,0 +1,13 @@
+<div class="removable">
+  <div class="field bordered">
+    <h3>Branch details</h3>
+    <h5>Branches represent different locations for a client</h5>
+    <%= f.text_field :branch_name %> <%= f.link_to_remove "Remove" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :contact_phone, :class => 'contact_phone', :placeholder => 'Phone no.' %> <%= f.text_field :contact_phone_ext, :class => 'contact_ext', :placeholder => 'Ext.' %>
+  </div>
+
+  <%= f.fields_for :contacts %>
+  <p><%= f.link_to_add "Add another contact", :contacts %></p>
+</div>

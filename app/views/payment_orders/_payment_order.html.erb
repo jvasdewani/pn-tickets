@@ -1,0 +1,19 @@
+<tr>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.po_number %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.initials %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.created_at.strftime('%d-%b-%y') %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.client.company %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.to_invoice_client %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.invoice_number %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.nominal_code %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.product_description %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.notes %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= number_to_currency payment_order.carriage_sale, :unit => '&pound;' %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= number_to_currency payment_order.product_sale, :unit => '&pound;' %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.supplier_name %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= payment_order.supplier_invoice_number %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= number_to_currency payment_order.cost, :unit => '&pound;' %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= number_to_currency payment_order.cost_of_carriage, :unit => '&pound;' %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= status_link payment_order %></td>
+  <td style="padding: 3px 5px; border: 1px solid #eee;"><%= link_to 'Edit', edit_payment_order_path(payment_order) %></td>
+</tr>

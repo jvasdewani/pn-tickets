@@ -1,0 +1,38 @@
+<% if current_person.admin? %>
+  <%= div_for issue, class: 'admin' do %>
+    <p>#<%= issue.issue_no %> <%= link_to issue.subject, issue_path(issue) %></p>
+    <p class="minor"><%= (issue.client.nil? ? '' : issue.client.company) %> | ticket: <%= time_display issue.issue_time %> | response: <%= time_display issue.response_time %></p>
+
+    <div class="status">
+      <h2 class="<%= issue.humane_status %>"><%= issue.humane_status.titleize %></h2>
+      <h3 class="<%= issue.priority %>"><%= issue.priority.titleize %></h3>
+    </div>
+
+    <div class="assignments">
+      <p><%= ticket_department issue, false %></p>
+      <p><%= ticket_product issue, false %></p>
+      <p><%= ticket_assignment issue %></p>
+    </div>
+
+    <div class="admin-select">
+      <%= f.check_box :ids, { name: "multi_ticket_edit[ids][]" }, issue.id %>
+    </div>
+
+  <% end %>
+<% else %>
+  <%= div_for issue do %>
+    <p>#<%= issue.issue_no %> <%= link_to issue.subject, issue_path(issue) %></p>
+    <p class="minor"><%= (issue.client.nil? ? '' : issue.client.company) %> | ticket: <%= time_display issue.issue_time %> | response: <%= time_display issue.response_time %></p>
+
+    <div class="status">
+      <h2 class="<%= issue.humane_status %>"><%= issue.humane_status.titleize %></h2>
+      <h3 class="<%= issue.priority %>"><%= issue.priority.titleize %></h3>
+    </div>
+
+    <div class="assignments">
+      <p><%= ticket_department issue, false %></p>
+      <p><%= ticket_product issue, false %></p>
+      <p><%= ticket_assignment issue %></p>
+    </div>
+  <% end %>
+<% end %>

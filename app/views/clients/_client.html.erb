@@ -1,0 +1,10 @@
+<%= div_for client do %>
+  <h2><%= client.company %> (<%= client.group %>)</h2>
+	<p>Tel: <%= client.contact_phone %></p>
+
+	<% if current_person.admin? %>
+		<div class="controls">
+      <p><%= link_to "Edit", edit_client_path(client) %> <%= link_to "Delete", client, :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this client?" %></p>
+		</div>
+	<% end %>
+<% end %>

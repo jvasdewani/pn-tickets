@@ -1,0 +1,15 @@
+$('div.client_user').html('<%= escape_javascript(render(:partial => 'client_users')) %>').show();
+
+$('select#issue_contact_id').on('change', function() {
+  if ($(this).val().split('|')[0] == 'add-to-branch') {
+    var client_id = $(this).val().split('|')[1];
+    var branch_id = $(this).val().split('|')[2];
+    if (new_contact = prompt('Enter the name of the new user')) {
+      $.ajax({
+        type: 'POST',
+        url: '/contacts.js',
+        data: { client_id: client_id, branch_id: branch_id, name: new_contact }
+      });
+    }
+  }
+});

@@ -1,0 +1,10 @@
+<%= div_for person do %>
+	<h2><%= person.full_name %></h2>
+  <p><%= person.departments.collect { |d| d.department_name }.join(', ') %></p>
+
+	<% if current_person.admin? || current_person.id == person.id %>
+		<div class="controls">
+    <p><% if current_person.admin? || current_person.id == person.id %><%= link_to "Edit", edit_person_path(person) %><% end %> <% if current_person.admin? %><%= link_to "Delete", person, :url => person_path(person), :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this agent?" %><% end %></p>
+		</div>
+	<% end %>
+<% end %>

@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  client_id: 
+  branch_name: MyString
+  contact_phone: MyString
+  contact_phone_ext: MyString
+
+two:
+  client_id: 
+  branch_name: MyString
+  contact_phone: MyString
+  contact_phone_ext: MyString

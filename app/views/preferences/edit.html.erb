@@ -1,0 +1,12 @@
+<%= page_title "Preferences" %>
+
+<div class="page_head">
+  <h1>Preferences</h1>
+</div>
+
+<div class="edit person">
+  <%= nested_form_for @person, url: preferences_path do |f| %>
+    <%= render :partial => 'people/form', :locals => { :f => f } %>
+    <p class="button"><%= f.submit "Save changes", :disable_with => 'Saving changes' %></p>
+  <% end %>
+</div>

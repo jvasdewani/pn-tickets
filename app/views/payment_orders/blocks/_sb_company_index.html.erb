@@ -1,0 +1,12 @@
+<div class="sidebar">
+	<%= link_to 'Add a new contract', new_company_contract_path(@company), :class => 'call_to_action' %>
+	<div class="nav">
+		<ul>
+			<li class="company"><%= link_to "Client details", @company %></li>
+			<li class="contacts"><%= link_to "Contacts", company_clients_path(@company) %></li>
+			<li class="payments"><%= link_to "Payments", company_payments_path(@company) %></li>
+			<li class="active contracts"><%= link_to "Contracts", company_contracts_path(@company) %></li>
+			<li class="reminders"><%= link_to "Reminders", company_reminders_path(@company) %></li>
+		</ul>
+	</div>
+</div>

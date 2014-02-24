@@ -1,0 +1,1 @@
+  <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name, selected: f.object.department_id) %> <%= f.link_to_remove "Revoke" %>

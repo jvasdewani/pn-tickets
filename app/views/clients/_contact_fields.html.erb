@@ -1,0 +1,16 @@
+<div class="removable">
+  <div class="field bordered">
+    <h3>Contact details</h3>
+    <h5>A contact is an individual at a branch</h5>
+    <%= f.text_field :forename, :class => 'contact_forename', :placeholder => 'Forename' %> <%= f.text_field :surname, :class => 'contact_surname', :placeholder => 'Surname' %> <%= f.link_to_remove "Remove" %>
+  </div>
+  <div class="field">
+    <%= f.text_field :email, :class => 'contact_email', :placeholder => 'Email address' %>
+  </div>
+  <div class="field">
+    <%= f.text_field :contact_phone, :class => 'contact_phone', :placeholder => 'Phone no.' %> <%= f.text_field :contact_phone_ext, :class => 'contact_ext', :placeholder => 'Ext.' %>
+  </div>
+  <div class="field">
+    <%= f.text_field :contact_mobile, :class => 'contact_phone', :placeholder => 'Mobile no.' %>
+  </div>
+</div>

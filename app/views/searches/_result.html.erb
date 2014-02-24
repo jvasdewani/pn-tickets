@@ -1,0 +1,24 @@
+<% if current_person.admin? %>
+  <div id="issue_<%= result.id %>" class="issue admin search">
+    <p>#<%= result.issue_no %> <%= link_to result.subject, issue_path(result.issue_no) %></p>
+    <p class="minor"><%= result.client_company %></p>
+
+    <div class="status">
+      <h2 class="<%= s_to_s(result.status) %>"><%= s_to_s(result.status) %></h2>
+    </div>
+
+    <div class="admin-select">
+      <%= f.check_box :ids, { name: "multi_ticket_edit[ids][]" }, result.issue_no %>
+    </div>
+
+  </div>
+<% else %>
+  <div id="issue_<%= result.id %>">
+    <p>#<%= result.issue_no %> <%= link_to result.subject, issue_path(result.issue_no) %></p>
+    <p class="minor"><%= result.client_company %></p>
+
+    <div class="status">
+      <h2 class="<%= s_to_s(issue.status) %>"><%= s_to_s(issue.status).titleize %></h2>
+    </div>
+  </div>
+<% end %>

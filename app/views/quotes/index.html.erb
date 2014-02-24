@@ -1,0 +1,28 @@
+<%= page_title "Quotes" %>
+
+<div class="page_head">
+  <h1>Quotes</h1>
+</div>
+
+<div class="issues list">
+  <div class="issues">
+    <% unless @quotes.empty? %>
+      <%= render @quotes %>
+      <div class="pages">
+        <%= paginate @quotes %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="sidebar">
+    <%= link_to "Create a new quote", new_quote_path, class: 'cta' %>
+
+    <h2>Clients</h2>
+
+    <% if !@client %>
+      <%= select_tag :quote_redirect, '<option value="all">All</option>'.html_safe + options_from_collection_for_select(Client.ordered, :id, :company), selected: 'all' %>
+    <% else %>
+      <%= select_tag :quote_redirect, '<option value="all">All</option>'.html_safe + options_from_collection_for_select(Client.ordered, :id, :company, selected: @client.id) %>
+    <% end %>
+  </div>
+</div>

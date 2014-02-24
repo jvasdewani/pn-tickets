@@ -1,0 +1,41 @@
+<div class="wrapper">
+  <div id="header">
+    <p>
+      <% if current_person.admin? %>
+        <%= link_to "Task lists", task_lists_path %> |
+        <%= link_to "Staff", people_path %> |
+        <%= link_to "Departments", departments_path %> |
+        <%= link_to "Settings", settings_path %> |
+      <% end %>
+      <%= link_to "Preferences", edit_preferences_path %> |
+      <%= link_to "Sign out", signout_path %> |
+      <% if current_person.admin? %>
+        <%= link_to "Scoreboard", widescreen_path %>
+      <% end %>
+    </p>
+    <h6>
+      <% if current_person.client? %>
+          <%= link_to "Tickets", list_ticket_path %>
+      <% else %>
+      <span>
+        <%= link_to "Dashboard", root_path %>
+        <% if current_person.tickets? %>
+          <%= link_to "Tickets", issues_path %>
+        <% end %>
+        <% if current_person.quotes? %>
+          <%= link_to "Quotes", quotes_path %>
+        <% end %>
+        <% if current_person.reports? %>
+          <%= link_to 'Reports', new_report_path %>
+        <% end %>
+        <% if current_person.contracts? %>
+          <%= link_to 'Contracts', contracts_path %>
+          <%= link_to 'Reminders', reminders_path %>
+          <%= link_to 'Payment Orders', payment_orders_path %>
+        <% end %>
+        <%= link_to "Clients", clients_path %>
+      </span>
+      <% end %>
+    </h6>
+  </div>
+</div>

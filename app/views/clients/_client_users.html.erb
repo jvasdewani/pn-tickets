@@ -1,0 +1,7 @@
+<h5>...now select the client user</h5>
+<% @options = @client.branches.order(branch_name: :asc).collect { |b| "<optgroup label=\"#{b.branch_name}\">" + b.contacts.order(forename: :asc).collect { |c| "<option value=\"#{c.id}\">#{c.full_name}</option>" }.join + "<option value=\"add-to-branch|#{@client.id}|#{b.id}\">Add contact to #{b.branch_name}</option></optgroup>" }.join %>
+<select id="issue_contact_id" name="issue[contact_id]"><option value>Select one</option><%= @options.html_safe %></select>
+
+<h5>...and select task list</h5>
+<% @options = "<optgroup label=\"#{@client.company}\">" + @client.task_lists.order(name: :asc).collect { |t| "<option value=\"#{t.id}\">#{t.name}</option>" }.join + "</optgroup><optgroup label=\"General\">" + TaskList.where(:client_id => nil).order(name: :asc).collect { |t| "<option value=\"#{t.id}\">#{t.name}</option>" }.join + "</optgroup>" %>
+<select id="issue_task_list_id" name="issue[task_list_id]"><option value>Select one</option><%= @options.html_safe %></select>

@@ -1,0 +1,11 @@
+<div id="contract-list">
+	<h1>PO</h1>
+  <div class="upcoming">
+    <div class="title">
+      <h3><%= pluralize @payment_orders.length, 'Active PO' %></h3>
+    </div>
+    <table style="width: 100%; font-size: 12px;">
+      <%= render @payment_orders %>
+    </table>
+  </div>
+</div>

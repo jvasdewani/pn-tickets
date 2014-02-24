@@ -1,0 +1,12 @@
+<% page_title "Please sign in" %>
+
+<h2>Please sign in</h2>
+<%= form_tag client_login_quote_path(params[:id]), method: :post do %>
+  <div class="field">
+  	<%= text_field_tag :username, nil, :placeholder => 'Username' %>
+  </div>
+	<div class="field">
+		<%= password_field_tag :password, nil, :placeholder => 'Password' %>
+	</div>
+  <p><%= submit_tag "Sign in" %></p>
+<% end %>

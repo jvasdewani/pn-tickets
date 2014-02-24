@@ -1,0 +1,39 @@
+<%= page_title "All tickets" %>
+
+<div class="page_head">
+	<h1>Search Results</h1>
+</div>
+
+<div class="issues list">
+	
+  <div class="issues">
+    <% if current_person.admin? %>
+      <%= form_for @bulk_edit do |f| %>
+        <% unless @issues.empty? %>
+          <%= render partial: 'issues/issue', collection: @issues, locals: { f: f} %>
+        <% end %>
+
+        <div class="field">
+          <p>Update selected tickets as: <%= f.select :status, ['Open','On Hold','Resolved'] %> with the comment: <%= f.text_field :message %> <%= f.submit 'Update tickets' %></p>
+          <%= f.hidden_field :person, value: current_person.id %>
+        </div>
+
+        <div class="pages">
+          <%= paginate @issues %>
+        </div>
+      <% end %>
+    <% else %>
+      <% unless @issues.empty? %>
+        <%= render @issues %>
+      <% end %>
+      <div class="pages">
+        <%= paginate @issues %>
+      </div>
+    <% end %>
+  </div>
+	
+	<div class="sidebar">
+    <h2><%= link_to "Create a new ticket", new_issue_path %></h2>
+    <%= render :partial => 'searches/form' %> 
+  </div>
+</div>

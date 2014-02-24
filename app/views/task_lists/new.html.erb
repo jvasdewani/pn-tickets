@@ -1,0 +1,13 @@
+<%= page_title "New task list" %>
+
+<div class="page_head">
+	<h1>New Task List</h1>
+</div>
+
+<div class="new department">
+	<%= nested_form_for @task_list do |f| %>
+		<%= render :partial => 'form', :locals => { :f => f } %>
+		<p class="button"><%= f.submit "Create task list", :disable_with => 'Creating new task list' %> <%= link_to "Cancel", task_lists_path %></p>
+	<% end %>
+  <%= content_for :tasks_fields_template %>
+</div>

@@ -1,0 +1,69 @@
+<div class="field">
+  <h3>Company</h3>
+  <h5>What is the company name for this client?</h5>
+	<%= f.text_field :company %>
+</div>
+
+<div class="field">
+  <h3>Parent Company</h3>
+  <h5>Who is responsible for this client?</h5>
+	<%= f.select :group, options_for_select(['Prime Networks','Modern'], f.object.group) %>
+</div>
+
+<div class="field">
+  <h3>Contact details</h3>
+  <h5>Add the global contact for this client</h5>
+	<%= f.text_field :contact_phone, :class => 'contact_phone', :placeholder => 'Phone no.' %> <%= f.text_field :contact_phone_ext, :class => 'contact_ext', :placeholder => 'Ext.' %>
+</div>
+
+<div class="field">
+  <h3>Wiki</h3>
+  <h5>Provide a link to the clients wiki page</h5>
+  <%= f.text_field :wiki_page, :placeholder => 'http://wiki.com/client' %>
+</div>
+
+<div class="field bordered" data-observe="responsibility_select">
+  <h3>Health check reminders</h3>
+  <h5>Set the date and agent for the quarterly health checks.</h5>
+  <%= f.text_field :check_date, :placeholder => 'dd/mm/yyyy', :class => 'date_picker' %>
+  <%= select_hc_responsibility f %>
+</div>
+
+<%= f.fields_for :branches %>
+<p><%= f.link_to_add "Add another branch", :branches %></p>
+
+<div class="field bordered">
+  <% if (@person_postparams.present? && @person_postparams.errors.any?) %>
+    <div class="error_messages">
+      <ul>
+        <% for message in @person_postparams.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <% if (@person.present? && @person.errors.any?) %>
+    <div class="error_messages">
+      <ul>
+        <% for message in @person.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    
+  <h3>Login credentials</h3>
+  <%= text_field(:person, :username, :placeholder => 'Username') %>
+</div>
+<div class="field">
+  <%= password_field(:person, :password, :placeholder => 'Password') %>
+</div>
+<div class="field">
+  <%= password_field(:person, :password_confirmation, :placeholder => 'Confirm Password') %>
+</div>
+
+<div class="field bordered">
+  <h3>Active Client</h3>
+  <h5>Inactive clients are not displayed in selection lists</h5>
+  <p><%= f.check_box :active_client %> Is this client active.</p>
+</div>

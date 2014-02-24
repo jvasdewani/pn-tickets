@@ -1,0 +1,190 @@
+<%= page_title "Ticket ##{@issue.issue_no}" %>
+
+<div class="page_head">
+  <h1>Ticket: <%= @issue.subject %></h1>
+</div>
+
+<div class="issue_head <%= @issue.humane_status %>">
+  <div class="bordered ticket">
+    <h5>Ticket #</h5>
+    <h2><%= @issue.issue_no %></h2>
+  </div>
+  <div class="bordered status">
+    <h5>Status</h5>
+    <h2><%= @issue.humane_status.titleize %></h2>
+  </div>
+  <div class="bordered priority">
+    <h5>Priority</h5>
+    <h2><%= @issue.priority.titleize %></h2>
+  </div>
+
+  <h5>Department</h5>
+  <h2><%= @issue.department.department_name unless @issue.department.nil? %> <%= "(#{@issue.product_type.name})" unless @issue.product_type.nil? %></h2>
+
+  <div class="assignment">
+    <% if @comment.person_id %>
+      <p><%= ticket_assignment @issue %></p>
+    <% else %>
+      <p><%= ticket_assignment @comment %></p>
+    <% end %>
+    <%#= Time.now %>
+    <p>Ticket time: <strong><%= time_display @issue.issue_time %></strong></p>
+    
+  </div>
+</div>
+
+<div class="issue_display">
+
+  <div class="comments">
+    <%= render @issue.comments.ordered %>
+  </div>
+
+
+  <%= form_for @issue, html: { multipart: true } do |f| %>
+    <%=hidden_field_tag('issue_time',@issue.issue_time)%>
+    <% if @issue.task_list.present? && !@issue.task_list.tasks.empty? %>
+      <div class="task_list">
+        <h3>Confirmation task list</h3>
+        <h5>To mark this ticket as complete please ensure you have completed the following tasks</h5>
+        <ul>
+          <% @issue.task_list.tasks.each do |task| %>
+            <% if @issue.checklist.blank? %>
+              <input type="hidden" name="issue[checklist][<%= task.id %>]" value="0">
+              <li>
+                <label>
+                  <input type="checkbox" name="issue[checklist][<%= task.id %>]" value="1"> 
+                  <%= task.task_name %>
+                </label>
+              </li>
+            <% else %>
+              <input type="hidden" name="issue[checklist][<%= task.id %>]" value="0">
+              <% if @issue.checklist.has_key?((task.id).to_s) && @issue.checklist[(task.id).to_s] %>
+                <li>
+                  <label>
+                    <%=check_box_tag "issue[checklist][#{(task.id).to_s}]", '1', @issue.checklist[(task.id).to_s] == '1'%>
+                    <%#=check_box_tag(], '1', checked: 'checked')%>
+                    <%= task.task_name %>
+                  </label>
+                </li>
+              <% else %>
+                <li>
+                  <label>
+                    <%=check_box_tag "issue[checklist][#{(task.id).to_s}]", '1', false%>
+                    <%= task.task_name %>
+                  </label>
+                </li>
+              <% end %>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="update_ticket">
+      <%= f.hidden_field :contact_id, :value => @issue.contact_id %>
+      <%= f.fields_for :comments, @issue.comments.new(:_ns => @issue.comments.where.not(:_ns => nil).ordered.last._ns) do |c| %>
+        <div class="field bordered">
+          <h3>Ticket status</h3>
+          <h5>Update the status of this ticket</h5>
+          <p><%= c.radio_button :_ns, 30 %> <%= c.label :_ns, 'Open' %></p>
+          <p><%= c.radio_button :_ns, 20 %> <%= c.label :_ns, 'On hold' %></p>
+          <% if @issue.task_list.present? && !@issue.task_list.tasks.empty? %>
+            <p><%= c.radio_button :_ns, 10, :disabled => 'disabled' %> <%= c.label :_ns, 'Resolved', :class => 'disabled' %></p>
+          <% else %>
+            <p><%= c.radio_button :_ns, 10 %> <%= c.label :_ns, 'Resolved' %></p>
+          <% end %>
+        </div>
+        <div class="field">
+          <%= c.label :content, "Update message <strong>(optional)</strong>".html_safe %>
+          <%= c.text_area :content %>
+          <%= c.hidden_field :_ps, :value => @issue.comments.where.not(:_ns => nil).ordered.last._ns %>
+          <%= c.hidden_field :_pp, :value => @issue.comments.where.not(:_np => nil).ordered.last._np %>
+          <%= c.hidden_field :person_id, :value => current_person.id %>
+          <%# <%= c.hidden_field :created_at, :value => Time.now %1> %>
+        </div>
+
+        <div class="field bordered">
+          <%= c.label :attachment, "Attachment <em>Include a screengrab or file</em>".html_safe %>
+          <%= c.file_field :attachment %>
+        </div>
+
+        <div class="field bordered" data-observe="department_select">
+          <h3>Would you like to reassign this ticket?</h3>
+          <h5>Please select the person in your teams that will be responsible for this ticket.</h5>
+          <p><%= f.label :department_id, 'Department:' %> <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name, :selected => @issue.department_id) %></p>
+          <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, '<option value=''>Unassigned</option>'.html_safe + options_from_collection_for_select(Person.ordered, :id, :abbr_name, :selected =>  (@comment.person_id.present?)? @issue.person_id : '') %></p>
+        </div>
+
+        <div class="field bordered" data-observe="client_select">
+          <h3>Product type?</h3>
+          <h5>What does this issue relate to...</h5>
+          <%= f.select :product_type_id, options_from_collection_for_select(ProductType.all, :id, :name, :selected => @issue.product_type_id) %>
+        </div>
+
+        <div class="field">
+          <h3>What is the priority for this ticket?</h3>
+          <h5>Higher priority tickets will appear higher in the agent's lists.</h5>
+          <p><%= c.label :_np, "This ticket is" %> <%= c.select :_np, options_for_select([['Critical', 40], ['High', 30], ['Normal', 20], ['Low', 10]], 20) %></p>
+        </div>
+
+      <% end %>
+      <p class="button"><%= f.submit 'Update ticket', :disable_with => "Updating ticket..." %> <% if current_person.admin? %><%= link_to "Delete this ticket", @issue, :method => :delete, :confirm => 'Are you sure you wish to remove this ticket?' %><% end %> <% if session[:referer].blank? %><%= link_to 'Back', '/' %><% else %><%= link_to 'Back', session[:referer] %><% end %></p>
+    </div>
+  <% end %>
+
+  <div class="sidebar">
+    <% if session[:referer].blank? %><%= link_to 'Back', '/issues', class: 'cta' %><% else %><%= link_to 'Back', session[:referer], class: 'cta' %><% end %><br /><br />
+    <%= link_to('View client wiki', @issue.client.wiki_page, :target => '_blank', class: 'cta') + "<br /><br />".html_safe if @issue.client && @issue.client.wiki_page.present? %>
+
+    <% if @issue.contact.present? %>
+      <div class="client">
+        <h4>Client info</h4>
+        <p><%= @issue.client.company %></p>
+        <p><%= @issue.client.contact_phone %></p>
+      </div>
+
+      <% if @issue.contact.present? %>
+        <% if @issue.contact.branch.present? %>
+          <div class="client">
+            <h4>Branch info</h4>
+            <p><%= @issue.contact.branch.branch_name %></p>
+            <p><%= @issue.contact.branch.contact_phone %> <%= "(#{@issue.contact.branch.contact_phone_ext})" if @issue.contact.branch.contact_phone_ext.present? %></p>
+          </div>
+        <% end %>
+
+        <div class="client">
+          <h4>Contact info</h4>
+          <p><%= @issue.contact.full_name %></p>
+          <p><%= @issue.contact.email %></p>
+          <p><%= @issue.contact.contact_phone %></p>
+          <p><%= @issue.contact.contact_mobile %></p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $("#issue_department_id").change(function () {
+        if (this.value == '5') {
+        $("#issue_product_type_id")
+            .find("option")
+            .show()
+            .not("option[value='1']").hide();
+            $("#issue_product_type_id").val($("#issue_product_type_id").find("option:visible:first").val());
+        }
+        else
+        {
+            $('#issue_product_type_id').find("option").show();
+        }
+
+    }).change();
+
+    $('#issue_comments_attributes_0__ns_30').on('click', function(){
+      if($('#issue_person_id').val() == ''){
+          $('#issue_person_id').val("<%=@current_person.id%>")
+    }});
+
+  });
+</script>

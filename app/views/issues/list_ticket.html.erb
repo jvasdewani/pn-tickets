@@ -1,0 +1,24 @@
+<%= page_title "All tickets" %>
+<div class="page_head">
+  <h1><%=raw dashboard_header(@issue, @issues.size) %></h1>
+</div>
+
+<div class="issues list">
+  <% if current_person.client? && @issues.present? %>
+    <div class="issues">
+      <% unless @issues.empty? %>
+        <%= render partial: 'issues/issue_list', collection: @issues %>
+      <% end %>
+
+      <div class="pages">
+        <%= paginate @issues %>
+      </div>
+
+    </div>
+    <div class="sidebar">
+      <%= render :partial => 'searches/form_client' %>
+    </div>
+  <% else %>  
+    <span> No Tickets Available</span>
+  <% end %>
+</div>

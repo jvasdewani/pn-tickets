@@ -1,0 +1,22 @@
+<div class="field supplier_select">
+  <%= f.fields_for :supplier_assignment, f.object.build_supplier_assignment do |s| %>
+    <%= s.label :supplier_id, 'Supplier' %>
+    <%= s.select :supplier_id, "<option value>Select one</option>".html_safe + options_from_collection_for_select(Supplier.ordered, :id, :name, selected: s.object.supplier_id) + "<option value=\"add-supplier\">Add new supplier</option>".html_safe %>
+  <% end %>
+</div>
+
+<div class="field">
+  <%= f.label :description %>
+  <%= f.text_area :description, class: 'quote_item_desc' %>
+</div>
+
+<div class="field">
+  <%= f.label :supplier_invoice_no %>
+  <%= f.text_field :supplier_invoice_no %>
+</div>
+
+<div class="field bordered">
+  <%= f.label :qty, "Quantity, Unit price & Sale Price" %>
+  <p><%= f.text_field :qty, placeholder: 'Qty', style: 'width: 60px' %> &pound; <%= f.text_field :unit_price, placeholder: 'Cost Price', style: 'width: 150px' %> &pound; <%= f.text_field :sale_price, placeholder: 'Sale Price', style: 'width: 150px' %> <span><%= f.link_to_remove "Remove quote item" %></span></p>
+</div>
+

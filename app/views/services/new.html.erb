@@ -1,0 +1,12 @@
+<%= page_title "New service" %>
+
+<div class="page_head">
+  <h1>New Service</h1>
+</div>
+
+<div class="new person">
+  <%= form_for @service do |f| %>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <p class="button"><%= f.submit "Create service", :disable_with => 'Saving changes' %> <%= link_to "Cancel", settings_path %></p>
+  <% end %>
+</div>

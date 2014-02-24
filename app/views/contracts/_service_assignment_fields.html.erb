@@ -1,0 +1,1 @@
+  <%= f.select :service_id, options_from_collection_for_select(Service.ordered, :id, :name, selected: f.object.service_id) %> <%= f.link_to_remove "Remove" %>

@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  quote_id: 
+  description: MyText
+  amount: 1.5
+
+two:
+  quote_id: 
+  description: MyText
+  amount: 1.5

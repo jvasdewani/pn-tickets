@@ -1,0 +1,54 @@
+<%= page_title 'Edit contract' %>
+
+<div class="page_head">
+  <h1>Edit Contract</h1>
+</div>
+
+<div class="new person">
+  <%= nested_form_for @contract do |f| %>
+    <div class="field">
+      <%= f.label :contract_name, "Enter a reference for this contract" %>
+      <%= f.text_field :contract_name %>
+    </div>
+    <div class="field">
+      <%= f.label :start_date, "Start date and end date" %>
+      <div class="start_date_selector">
+        <%= f.date_select :start_date, :order => [ :day, :month, :year ] %>
+      </div>
+      <div class="end_date_selector">
+        <%= f.date_select :end_date, :order => [ :day, :month, :year ] %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :renewal_type, "Payment term" %>
+      <%= f.select :renewal_type, options_for_select([['Monthly', 'monthly'],['Quarterly', 'quarterly'],['Annually','annually']], f.object.renewal_type) %>
+    </div>
+    <div class="field">
+      <%= f.label :value, "Value of the contract" %>
+      <%= f.text_field :value, :placeholder => '0.00' %>
+    </div>
+    <div class="field">
+      <%= f.label :service_time_allocation, "Support time included with this contract" %>
+      <div class="time_select">
+        <%= f.text_field :service_time_allocation %>
+      </div>
+      <% unless f.object.new_record? %>
+        <div class="field">
+          <label><%= f.check_box :reset_time_info %> Would you like to reset the logged contract time?</label>
+        </div>
+      <% end %>
+    </div>
+    <%= f.hidden_field :invoiced, :value => false %>
+    <%= f.hidden_field :paid, :value => false %>
+
+    <div class="field">
+      <h3>Service selection</h3>
+      <h5>Select services for this contract</h5>
+      <%= f.fields_for :service_assignments %>
+      <p><%= f.link_to_add "Add another service", :service_assignments %></p>
+    </div>
+
+    <p class="button"><%= f.submit 'Save changes' %> or <%= link_to 'Cancel', contracts_path %></p>
+  <% end %>
+
+</div>

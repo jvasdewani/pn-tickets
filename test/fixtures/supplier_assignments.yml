@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  supplier_quote_id: 
+  supplier_id: 
+
+two:
+  supplier_quote_id: 
+  supplier_id: 

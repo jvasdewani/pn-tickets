@@ -1,0 +1,19 @@
+<%= page_title "Report" %>
+
+<div class="page_head">
+  <h1>Report</h1>
+</div>
+
+<div id="new-report-search">
+  <div class="search">
+    <h2 id="waiting">Generating report</h2>
+
+    <script type="text/javascript">
+      var client = new Faye.Client('http://192.168.20.3:9292/faye');
+      client.disable('websocket');
+      client.subscribe('/<%= @uuid %>', function(message) {
+        $('#waiting').html('<a href="'+message['pdf']+'">Download report</a>');
+      });
+    </script>
+  </div>
+</div>

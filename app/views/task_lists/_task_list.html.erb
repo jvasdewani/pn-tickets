@@ -1,0 +1,9 @@
+<div class="reminder_category person">
+	<h2><%= task_list.name %></h2>
+
+	<% if current_person.admin? %>
+		<div class="controls">
+			<p><%= link_to "Edit", edit_task_list_path(task_list) %> <%= link_to "Delete", task_list, :url => task_list_path(task_list), :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this task_list?" %></p>
+		</div>
+	<% end %>
+</div>

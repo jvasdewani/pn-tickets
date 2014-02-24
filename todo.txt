@@ -1,0 +1,11 @@
+Import the contracts
+Import reminders
+Purchase raises tech support ticket
+On confirm of ticket purchase becomes PO
+Report on PO
+
+Product type for quotes => None
+Contact for quotes
+Comment for quotes
+
+Revert ticket to new and make unassigned

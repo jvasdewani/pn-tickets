@@ -1,0 +1,22 @@
+<%= page_title "All tickets" %>
+
+<div class="page_head">
+  <h1>Search results</h1>
+</div>
+
+<div class="issues list">
+  <div class="issues">
+    <% if current_person.client? %>
+      <% unless @search_client.documents.empty? %>
+        <%= render partial: 'issues/issue_list', collection: @search_client.documents %>
+      <% end %>
+      <div class="pages">
+        <%= paginate @search_client.documents %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="sidebar">
+    <%= render :partial => 'searches_client/form' %>
+  </div>
+</div>

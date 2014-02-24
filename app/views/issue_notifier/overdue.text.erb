@@ -1,0 +1,12 @@
+The following ticket is overdue/about to become overdue
+
+Subject: <%= @issue.subject %>
+Description: <%= @issue.comments.ordered.first.content %>
+
+Assigned to: <%= @issue.person.abbr_name if @issue.person %>
+Department: <%= @issue.department.department_name if @issue.department %>
+Client: <%= @issue.client.company if @issue.client %>
+
+Priority: <%= @issue.priority.titleize %>
+
+Thanks

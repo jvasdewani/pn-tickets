@@ -1,0 +1,7 @@
+<%= div_for service, class: 'person' do %>
+	<h2><%= service.name %></h2>
+
+  <div class="controls">
+    <p><%= link_to "Edit", edit_service_path(service) %> <%= link_to "Delete", service, :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this service?" %></p>
+  </div>
+<% end %>

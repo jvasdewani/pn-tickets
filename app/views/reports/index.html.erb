@@ -1,0 +1,30 @@
+<%= page_title "All tickets" %>
+
+<div class="page_head">
+  <h1>Search results</h1>
+</div>
+
+<div class="issues list">
+  <div class="issues">
+    <% unless @issues.empty? %>
+      <%= render @issues %>
+    <% end %>
+    <div class="pages">
+      <%= paginate @issues, params: { search: params[:search] } %>
+    </div>
+  </div>
+
+  <div class="sidebar">
+    <%= link_to "Create a new ticket", new_issue_path, class: 'cta' %>
+
+    <h2>Departments</h2>
+
+    <% if !@department %>
+      <%= select_tag :ticket_redirect, '<option value="all">All</option>'.html_safe + options_from_collection_for_select(Department.all, :id, :department_name), selected: 'all' %>
+    <% else %>
+      <%= select_tag :ticket_redirect, '<option value="all">All</option>'.html_safe + options_from_collection_for_select(Department.all, :id, :department_name), selected: @department.id %>
+    <% end %>
+
+    <%= render :partial => 'searches/form' %>
+  </div>
+</div>

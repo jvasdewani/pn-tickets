@@ -1,0 +1,8 @@
+<%= div_for quote, class: 'issue' do %>
+  <p><%= link_to "##{quote.id} for #{quote.client.company}", quote %></p>
+  <p class="minor"><%= number_to_currency(quote.value, unit: '&pound;') %></p>
+
+  <div class="status">
+    <h2 class="<%= quote.status %>"><%= quote.status.titleize %></h2>
+  </div>
+<% end %>

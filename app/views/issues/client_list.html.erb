@@ -1,0 +1,6 @@
+<option>- None -</option>
+<% @issues.each do |issue| %>
+	<option value="<%= issue.client_user %>"><%= issue.client_user %></option>
+<% end %>
+<option>------</option>
+<option value="add-new-user">Add new user</option>

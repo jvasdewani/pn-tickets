@@ -1,0 +1,21 @@
+<%= page_title "New quote" %>
+
+<div class="page_head">
+  <h1>New quote</h1>
+</div>
+<div class="new issue">
+  <%= nested_form_for @quote, html: { multipart: true } do |f| %>
+    <div class="field bordered">
+      <h3>Who is requesting this quote?</h3>
+      <h5>Please select the client who has requested this quotation.</h5>
+      <p><%= f.label :client_id, 'Client:' %> <%= f.select :client_id, options_from_collection_for_select(Client.ordered, :id, :company), :prompt => 'Select one' %></p>
+    </div>
+
+    <div class="field">
+      <%= f.label :requirements, "Requirements for this quote <em>Please give as much detail as possible</em>".html_safe %>
+      <%= f.text_area :requirements %>
+    </div>
+
+    <p class="button"><%= f.submit 'Create quote', :disable_with => "Creating quote..." %> <%= link_to 'Cancel', quotes_path %></p>
+  <% end %>
+</div>

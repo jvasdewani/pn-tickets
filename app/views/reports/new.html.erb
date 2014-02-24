@@ -1,0 +1,51 @@
+<%= page_title "Report" %>
+
+<div class="page_head">
+  <h1>Report</h1>
+</div>
+
+<div id="new-report-search">
+  <div class="search">
+    <%= form_for @report, url: reports_path do |f| %>
+      <table width="100%" border="0">
+        <tr>
+          <td width="50%">
+            <div class="field">
+              <%= f.label :start_date, 'Start date' %>
+              <%= f.text_field :start_date, :class => 'date_picker' %>
+            </div>
+          </td>
+          <td>
+            <div class="field">
+              <%= f.label :end_date, 'End date' %>
+              <%= f.text_field :end_date, :class => 'date_picker' %>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="field">
+        <%= f.label :department %>
+        <%= f.select :department, options_from_collection_for_select(Department.ordered, :id, :department_name), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :client %>
+        <%= f.select :client, options_from_collection_for_select(Client.ordered, :id, :company), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :person, 'Agent' %>
+        <%= f.select :person, options_from_collection_for_select(Person.active.fullordered, :id, :full_name), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :product_type, 'Type' %>
+        <%= f.select :product_type, ['Connectivity','IT','Mobile','Telephony'], :prompt => 'Select one' %>
+      </div>
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, [['All', nil],['Active', 'active'],['New','new'],['On hold', 'on_hold'],['Open','open'],['Resolved', 'resolved']] %>
+    </div>
+      <div class="buttons">
+        <p><%= f.submit 'Generate Report' %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

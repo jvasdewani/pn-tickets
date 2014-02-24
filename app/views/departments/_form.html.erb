@@ -1,0 +1,11 @@
+<div class="field">
+  <h3>Department details</h3>
+  <h5>Add a name for this department</h5>
+  <%= f.text_field :department_name, :placeholder => "Department name" %>
+</div>
+
+<div class="field">
+  <h3>Notifications</h3>
+  <h5>When tickets are closed in this department you can configure an email to be sent</h5>
+  <h6><%= f.check_box :notify_on_close %> Send email to the following: <%= f.text_field :notify_list, placeholder: 'email@example.com, email@example.com,email@example.com...' %></h6>
+</div>

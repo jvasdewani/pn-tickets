@@ -1,0 +1,40 @@
+<div class="search">
+  <%= form_for @search do |f| %>
+    <h2>Filter tickets</h2>
+    <div class="field">
+      <%= f.label :start_date, 'From' %>
+      <%= f.text_field :start_date, class: 'date_picker' %>
+    </div>
+    <div class="field">
+      <%= f.label :end_date, 'To' %>
+      <%= f.text_field :end_date, class: 'date_picker' %>
+    </div>
+    <div class="field">
+      <%= f.label :ticket_no, 'Ticket #' %>
+      <%= f.text_field :ticket_no, :placeholder => '1234' %>
+    </div>
+    <div class="field">
+      <%= f.label :department %>
+      <%= f.select :department, "<option value>All</option>".html_safe + options_from_collection_for_select(Department.ordered, :id, :department_name, :selected => @search.department) %>
+    </div>
+    <div class="field">
+      <%= f.label :client %>
+      <%= f.select :client, "<option value>All</option>".html_safe + options_from_collection_for_select(Client.ordered, :id, :company, :selected => @search.client) %>
+    </div>
+    <div class="field">
+      <%= f.label :person, 'Agent' %>
+      <%= f.select :person, "<option value>All</option>".html_safe + options_from_collection_for_select(Person.ordered, :id, :full_name, :selected => @search.person) %>
+    </div>
+    <div class="field">
+      <%= f.label :product_type, 'Type' %>
+      <%= f.select :product_type, "<option value>All</option>".html_safe + options_from_collection_for_select(ProductType.ordered, :id, :name, :selected => @search.product_type) %>
+    </div>
+    <div class="field">
+      <%= f.label :status %>
+      <%= f.select :status, [['All', nil],['Active', 'active'],['Resolved', 'resolved'],['On hold', 'on_hold'],['Open','open'],['New','new']] %>
+    </div>
+    <div class="buttons">
+      <p><%= f.submit 'Search' %></p>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,12 @@
+<%= page_title "Edit reminder category" %>
+
+<div class="page_head">
+  <h1>Edit Reminder Category</h1>
+</div>
+
+<div class="edit person">
+  <%= form_for @reminder do |f| %>
+    <%= render :partial => 'form', :locals => { :f => f } %>
+    <p class="button"><%= f.submit "Save changes", :disable_with => 'Saving changes' %> <%= link_to "Cancel", settings_path %></p>
+  <% end %>
+</div>

@@ -1,0 +1,15 @@
+<div class="field">
+  <h3>Task list name</h3>
+  <h5>Add a name for this task list</h5>
+  <%= f.text_field :name, :placeholder => "Task list name" %>
+</div>
+<div class="field">
+  <h3>Client</h3>
+  <h5>Select a client that this ticket belongs to.</h5>
+  <%= f.select :client_id, "<option value>All</option>".html_safe + options_from_collection_for_select(Client.ordered.all, :id, :company, selected: f.object.client_id) %>
+</div>
+<div class="field">
+  <h5>Add tasks</h5>
+  <%= f.fields_for :tasks %>
+  <p><%= f.link_to_add "Add another task", :tasks %></p>
+</div>

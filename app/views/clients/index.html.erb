@@ -1,0 +1,18 @@
+<%= page_title "Manage clients" %>
+
+<div class="page_head">
+  <h1>Manage Clients</h1>
+</div>
+
+<div class="clients list">
+  <div class="clients">
+    <%= render @clients %>
+  </div>
+
+  <div class="sidebar">
+    <% if current_person.admin? %>
+      <%= link_to "Create a new client", new_client_path, class: 'cta' %>
+      <p>- <%= link_to "View client health checks", healthchecks_clients_path %></p>
+    <% end %>
+  </div>
+</div>

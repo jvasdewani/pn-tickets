@@ -1,0 +1,20 @@
+<div class="issue">
+  <p><%= contract.contract_name %> - <%= contract.client.company %></p>
+  <p class="minor">Services: <%= contract.services.collect { |s| s.name }.join(', ') unless contract.services.empty? %></p>
+	<p class="minor"><%= link_to 'Edit or renew', edit_contract_path(contract) %>, <%= contract.invoiced || contract.paid ? "<span>mark as invoiced</span>".html_safe : link_to('mark as invoiced', invoiced_contract_path(contract)).html_safe %> or <%= contract.paid ? "<span>mark as paid</span>".html_safe : link_to('mark as paid', paid_contract_path(contract)) %>.</p>
+
+  <div class="status">
+    <% if contract.paid? %>
+      <h2 class="<%= contract.class_state %>">Paid</h2>
+    <% elsif contract.invoiced? %>
+      <h2 class="<%= contract.class_state %>">Invoiced</h2>
+    <% else %>
+      <h2 class="<%= contract.class_state %>">New</h2>
+    <% end %>
+  </div>
+
+  <div class="assignments">
+    <p>Due: <%= contract.end_date.strftime("%d %b, %Y") %></p>
+    <p>Amount: <%= number_to_currency(contract.value, :locale => :gb, :unit => "&pound;") %></p>
+  </div>
+</div>

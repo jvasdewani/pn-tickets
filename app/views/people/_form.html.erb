@@ -1,0 +1,53 @@
+<div class="field">
+	<h3>Agent details</h3>
+	<h5>Personal details for the agent</h5>
+	<%= f.text_field :forename, :placeholder => 'Forename' %> <%= f.text_field :surname, :placeholder => 'Surname' %>
+</div>
+<div class="field">
+	<%= f.text_field :email, :placeholder => 'Email address' %>
+</div>
+<div class="field">
+	<h3>Department selection</h3>
+  <h5>Assign this agent to departments departments</h5>
+  <%= f.fields_for :assignments %>
+  <p><%= f.link_to_add "Assign to another department", :assignments %></p>
+</div>
+
+<div class="field bordered">
+  <h3>Login credentials</h3>
+  <h5>Set the password for this agent.</h5>
+  <%= f.label :username %>
+	<%= f.text_field :username %>
+</div>
+<div class="field">
+	<%= f.label :password %>
+	<%= f.password_field :password %>
+</div>
+<div class="field">
+	<%= f.label :password_confirmation %>
+	<%= f.password_field :password_confirmation %>
+</div>
+<% if current_person.admin? %>
+  <div class="field bordered">
+    <h3>Scoreboard</h3>
+    <h5>Show this persons results on the scoreboard</h5>
+    <p><%= f.check_box :show_on_scoreboard %> Yes, show this agent's daily results on the scoreboard</p>
+  </div>
+
+  <div class="field bordered">
+    <h3>Sectional access</h3>
+    <h5>Grant access to the various sections of the system</h5>
+    <p><%= f.check_box :tickets %> Allow access to tickets</p>
+    <p><%= f.check_box :reports %> Allow access to reports</p>
+    <p><%= f.check_box :quotes %> Allow access to quotes</p>
+    <p><%= f.check_box :contracts %> Allow access to contracts</p>
+  </div>
+
+  <div class="field bordered">
+    <h3>Permissions</h3>
+    <h5>Grant admin or manager privileges</h5>
+    <p><%= f.check_box :manager %> Make this person a manager (Receive weekly updates on performance)</p>
+    <p><%= f.check_box :admin %> Grant this person admin rights (Allows management of clients and staff members)</p>
+    <p><%= f.check_box :is_active %> Is Active?</p>
+  </div>
+<% end %>

@@ -1,0 +1,16 @@
+<%= page_title "Dashboard" %>
+
+<div class="page_head">
+  <h1>Dashboard</h1>
+</div>
+
+<div class="issues list">
+  <% if current_person.manager? %>
+    <%= render partial: 'manager' %>
+  <% else %>
+    <%= render partial: 'engineer' %>
+  <% end %>
+  <div class="sidebar">
+    <%= link_to "Create a new ticket", new_issue_path, class: 'cta' %>
+  </div>
+</div>

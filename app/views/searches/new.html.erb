@@ -1,0 +1,55 @@
+<%= page_title "Search" %>
+
+<div class="page_head">
+  <h1>Search</h1>
+</div>
+
+<div id="new-report-search">
+  <div class="search">
+    <%= form_for @search, url: searches_path do |f| %>
+      <table width="100%" border="0">
+        <tr>
+          <td width="50%">
+            <div class="field">
+              <%= f.label :start_date, 'Start date' %>
+              <%= f.text_field :start_date, :value => Date.today.strftime('%d/%m/%Y'), :class => 'date_picker' %>
+            </div>
+          </td>
+          <td>
+            <div class="field">
+              <%= f.label :end_date, 'End date' %>
+              <%= f.text_field :end_date, :value => (Date.today + 1.month).strftime('%d/%m/%Y'), :class => 'date_picker' %>
+            </div>
+          </td>
+        </tr>
+      </table>
+      <div class="field">
+        <%= f.label :department %>
+        <%= f.select :department, options_from_collection_for_select(Department.ordered, :id, :department_name), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :client %>
+        <%= f.select :client, options_from_collection_for_select(Client.ordered, :id, :company), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :person, 'Agent' %>
+        <%= f.select :person, options_from_collection_for_select(Person.ordered, :id, :full_name), :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :product_type, 'Type' %>
+        <%= f.select :product_type, ['IT','Connectivity','Telephony','Mobile'], :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :status %>
+        <%= f.select :status, [['Active', 99],['Was Resolved', 10],['Is Resolved', 11],['Was On hold', 20],['Is On hold', 21],['Was Opened',30],['Is Open',31],['Was New',40],['Is New',41]], :prompt => 'Select one' %>
+      </div>
+      <div class="field">
+        <%= f.label :priority %>
+        <%= f.select :priority, [['Low', 10],['Normal', 20],['High',30],['Critical',40]], :prompt => 'Select one' %>
+      </div>
+      <div class="buttons">
+        <p><%= f.submit 'Search' %></p>
+      </div>
+    <% end %>
+  </div>
+</div>

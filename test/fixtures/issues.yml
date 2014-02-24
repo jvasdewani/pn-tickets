@@ -1,0 +1,39 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  subject: MyString
+  issue_time_cache: 1
+  response_time_cache: 1
+  status: MyString
+  priority: MyString
+  checkid: MyString
+  checkcleared: false
+  checkstarttime: MyString
+  checkstartdate: MyString
+  checkdescription: MyText
+  product_type_id: 
+  checklist_id: 
+  closed_by_id: 
+  person_id: 
+  department_id: 
+  client_id: 
+  contact_id: 
+
+two:
+  subject: MyString
+  issue_time_cache: 1
+  response_time_cache: 1
+  status: MyString
+  priority: MyString
+  checkid: MyString
+  checkcleared: false
+  checkstarttime: MyString
+  checkstartdate: MyString
+  checkdescription: MyText
+  product_type_id: 
+  checklist_id: 
+  closed_by_id: 
+  person_id: 
+  department_id: 
+  client_id: 
+  contact_id: 

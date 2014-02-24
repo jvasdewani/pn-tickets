@@ -1,0 +1,22 @@
+<% unless comment.content.blank? && (comment._ps == comment._ns || comment._ps.nil?) && (comment._pp == comment._np || comment._pp.nil?) %>
+  <%= div_for comment do %>
+    <div class="date">
+      <h2><%= comment.created_at.localtime.strftime("%d %b, %Y at %H:%M") %></h2>
+    </div>
+
+    <% unless comment.content.blank? %>
+      <p><em><%= comment.author %></em> <%= textilize(comment.content).html_safe %></p>
+    <% end %>
+
+    <% if comment.attachment.present? %>
+      <p><%= link_to 'Download/View attachment', comment.attachment.url, target: '_blank' %></p>
+    <% end %>
+
+    <% unless comment._ps == comment._ns || comment._ps.nil? %>
+      <p class="status">Status changed: <em><%= comment.prev_status %> &rarr; <%= comment.status %></em> <%= "by #{comment.person.abbr_name}" if comment.person %></p>
+    <% end %>
+    <% unless comment._pp == comment._np || comment._pp.nil? %>
+      <p class="status">Priority changed: <em><%= comment.prev_priority %> &rarr; <%= comment.priority %></em> <%= "by #{comment.person.abbr_name}" if comment.person %></p>
+    <% end %>
+  <% end %>
+<% end %>

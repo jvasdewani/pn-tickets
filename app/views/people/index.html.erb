@@ -1,0 +1,17 @@
+<%= page_title "Manage agents" %>
+
+<div class="page_head">
+  <h1>Manage Agents</h1>
+</div>
+
+<div class="people list">
+  <div class="people">
+    <%= render @people %>
+  </div>
+
+  <div class="sidebar">
+    <% if current_person.admin? %>
+      <%= link_to "Create a new agent", new_person_path, class: 'cta' %>
+    <% end %>
+  </div>
+</div>

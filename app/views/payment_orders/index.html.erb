@@ -1,0 +1,19 @@
+<%= page_title 'Latest Activity' %>
+
+<div class="page_head">
+  <h1>Contracts</h1>
+</div>
+
+<div class="issues list">
+  <div class="issues">
+    <table style="width: 100%; font-size: 12px;">
+      <%= render @payment_orders %>
+    </table>
+  </div>
+
+  <div class="sidebar">
+    <%= link_to 'Add a new contract', new_contract_path, :class => 'cta' %><br /><br />
+    <%= link_to 'Add a new reminder', new_reminder_path, :class => 'cta' %><br /><br />
+    <%= link_to 'Add a new PO', new_payment_order_path, :class => 'cta' %><br /><br />
+  </div>
+</div>

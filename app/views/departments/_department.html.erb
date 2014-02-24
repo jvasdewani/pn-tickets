@@ -1,0 +1,10 @@
+<%= div_for department do %>
+	<h2><%= department.department_name %></h2>
+	<p><%= pluralize department.people.length, 'Agents' %></p>
+
+	<% if current_person.admin? %>
+		<div class="controls">
+			<p><%= link_to "Edit", edit_department_path(department) %> <%= link_to "Delete", department, :url => department_path(department), :method => :delete, :class => 'notice', :confirm => "Are you sure you want to remove this department?" %></p>
+		</div>
+	<% end %>
+<% end %>

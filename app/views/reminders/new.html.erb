@@ -1,0 +1,37 @@
+<%= page_title 'Add new reminder' %>
+
+<div class="page_head">
+  <h1>Add a new reminder</h1>
+</div>
+
+<div class="issue new">
+  <%= form_for @reminder do |f| %>
+    <div class="field">
+      <%= f.label :description, "Enter description for this reminder" %>
+      <%= f.text_field :description %>
+    </div>
+    <div class="field">
+      <%= f.label :client_id, 'Client' %>
+      <%= f.select :client_id, options_from_collection_for_select(Client.ordered, :id, :company) %>
+    </div>
+    <div class="field">
+      <%= f.label :end_date, "Date for this reminder" %>
+      <div class="end_date_selector">
+        <%= f.date_select :end_date, :order => [ :day, :month, :year ] %>
+      </div>
+    </div>
+    <div class="field">
+      <%= f.label :reminder_category_id, "Category" %>
+      <%= f.select :reminder_category_id, options_from_collection_for_select(ReminderCategory.ordered, :id, :category_name) %>
+    </div>
+    <div class="field">
+      <%= f.label :value, "Value of reminder" %>
+      <%= f.text_field :value, :placeholder => '100.00' %>
+    </div>
+    <%= f.hidden_field :invoiced, :value => false %>
+    <%= f.hidden_field :paid, :value => false %>
+
+    <p class="button"><%= f.submit 'Create new reminder' %> or <%= link_to 'Cancel', :back %></p>
+  <% end %>
+
+</div>

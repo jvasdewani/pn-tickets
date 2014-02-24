@@ -1,0 +1,28 @@
+<%= page_title "Settings" %>
+
+<div class="page_head">
+  <h1>Settings</h1>
+</div>
+
+<div class="people list">
+  <div class="people">
+    <h1>Reminder Categories</h1>
+    <%= render @reminders %>
+  </div>
+
+  <div class="people">
+    <h1>Product Types</h1>
+    <%= render @products %>
+  </div>
+
+  <div class="people">
+    <h1>Services</h1>
+    <%= render @services %>
+  </div>
+
+  <div class="sidebar">
+    <%= link_to "Create a new reminder category", new_reminder_category_path, class: 'cta' %><br /><br />
+    <%= link_to "Create a new product type", new_product_type_path, class: 'cta' %><br /><br />
+    <%= link_to "Create a new service", new_service_path, class: 'cta' %>
+  </div>
+</div>

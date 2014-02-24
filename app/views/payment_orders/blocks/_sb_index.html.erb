@@ -1,0 +1,18 @@
+<div class="sidebar">
+	<%= link_to 'Add a new contract', new_contract_path, :class => 'call_to_action' %>
+	<%= link_to 'Add a new reminder', new_reminder_path, :class => 'call_to_action' %>
+	<%= link_to 'Add a new PO', new_payment_order_path, :class => 'call_to_action' %>
+	<h3>Contracts</h3>
+	<ul>
+		<li><%= link_to "Renewals <span class=\"left\">#{@current_account.contracts.expired.length}</span><span class=\"right\">#{@current_account.contracts.upcoming.length}</span>".html_safe, contracts_path %></li>
+		<li><%= link_to "Payments <span class=\"left\">#{@current_account.payments.expired.length}</span><span class=\"right\">#{@current_account.payments.upcoming.length}</span>".html_safe, payments_path %></li>
+
+		<li class="active"><%= link_to "PO's <span class=\"left\">&nbsp;</span><span class=\"right\">#{@current_account.payment_orders.active.length}</span>".html_safe, payment_orders_path %></li>
+	</ul>
+	<h3>Reminders</h3>
+	<ul>
+		<% @current_account.reminder_categories.each do |reminder| %>
+			<li><%= link_to "#{reminder.category_name} <span class=\"left\">#{reminder.reminders.expired.length}</span><span class=\"right\">#{reminder.reminders.upcoming.length}</span>".html_safe, reminder %></li>
+		<% end %>
+	</ul>
+</div>

@@ -1,0 +1,5 @@
+<% if @contact.save %>
+  $('option[value="add-to-branch|<%= @client.id %>|<%= @branch.id %>"]').before("<option value=\"<%= @contact.id %>\" selected=\"selected\"><%= @contact.full_name %></option>");
+<% else %>
+  alert('There has been an error adding this user. Please make sure you have entered both first and last name, and make sure that this person doesn\'t already exist.');
+<% end %>

@@ -1,0 +1,5 @@
+<% if @supplier.save %>
+  $('select#<%= @id %> option[value="add-supplier"]').before("<option value=\"<%= @supplier.id %>\" selected=\"selected\"><%= @supplier.name %></option>");
+<% else %>
+  alert('There has been an error adding this supplier.');
+<% end %>
