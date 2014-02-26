@@ -23,7 +23,7 @@
     </div>
     <div class="field">
       <%= f.label :person, 'Agent' %>
-      <%= f.select :person, "<option value>All</option>".html_safe + options_from_collection_for_select(Person.ordered, :id, :full_name, :selected => @search.person) %>
+      <%= f.select :person, "<option value>All</option>".html_safe + options_from_collection_for_select(Person.active.fullordered, :id, :full_name, :selected => @search.person) %>
     </div>
     <div class="field">
       <%= f.label :product_type, 'Type' %>
@@ -31,7 +31,7 @@
     </div>
     <div class="field">
       <%= f.label :status %>
-      <%= f.select :status, [['All', nil],['Active', 'active'],['Resolved', 'resolved'],['On hold', 'on_hold'],['Open','open'],['New','new']] %>
+      <%= f.select :status, [['All', nil],['Active', 'active'],['New','new'],['On hold', 'on_hold'],['Open','open'],['Resolved', 'resolved']] %>
     </div>
     <div class="buttons">
       <p><%= f.submit 'Search' %></p>

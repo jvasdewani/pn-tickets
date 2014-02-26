@@ -10,15 +10,16 @@ class Issue < ActiveRecord::Base
   has_many :comments
   has_one :quote
 
-   scope :active, -> { where.not(status: 'resolved')}
-   scope :closed, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'resolved')}
-   scope :opened, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'open')}
+  scope :active, -> { where.not(status: 'resolved').order('is_order Asc, id Desc')}
+  scope :closed, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'resolved')}
+  scope :opened, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'open')}
 
-
+  scope :admin_active, ->(id) { where.not(status: 'resolved').where(person_id: id)}  
+  scope :admin_closed, ->(id) { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'resolved').where(person_id: id)}
+  scope :admin_opened, ->(id) { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'open').where(person_id: id)}
+    
   accepts_nested_attributes_for :comments
-
   after_create :queue_notifications
-
   serialize :checklist, Hash
 
   def after_initialize

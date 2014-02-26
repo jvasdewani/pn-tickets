@@ -11,7 +11,12 @@
     <div class="assignments">
       <p><%= ticket_department issue, false %></p>
       <p><%= ticket_product issue, false %></p>
-      <p><%= ticket_assignment issue %></p>
+      <p><%#= ticket_assignment issue %></p>
+      <% if issue.comments.last.person_id %>
+        <p><%= ticket_assignment issue %></p>
+      <% else %>
+        <p><%= ticket_assignment issue.comments.last %></p>
+      <% end %>
     </div>
 
     <div class="admin-select">
@@ -32,7 +37,12 @@
     <div class="assignments">
       <p><%= ticket_department issue, false %></p>
       <p><%= ticket_product issue, false %></p>
-      <p><%= ticket_assignment issue %></p>
+      <p><%#= ticket_assignment issue %></p>
+      <% if issue.comments.last.person_id %>
+        <p><%= ticket_assignment issue %></p>
+      <% else %>
+        <p><%= ticket_assignment issue.comments.last %></p>
+      <% end %>
     </div>
   <% end %>
 <% end %>

@@ -10,15 +10,27 @@
   <% Person.scoreboard.ordered.each do |person| %>
     <tr>
       <td><%= person.full_name %></td>
-      <td class="centered"><%= PersonScore.new(person.id, 'opened').score %></td>
-      <td class="centered"><%= PersonScore.new(person.id, 'closed').score %></td>
-      <td class="centered"><%= person.issues.active.count %></td>
+      <td class="centered">
+        <%#= PersonScore.new(person.id, 'opened').score %>
+        <%= link_to person.issues.admin_opened(person.id).count, admin_status_path('opened', person.id) %>
+      </td>
+      <td class="centered">
+        <%#= PersonScore.new(person.id, 'closed').score %>
+        <%= link_to person.issues.admin_closed(person.id).count, admin_status_path('closed', person.id) %>
+      </td>
+      <td class="centered">
+        <%#= person.issues.active.count %>
+        <%= link_to person.issues.admin_active(person.id).count, admin_status_path('active', person.id) %>
+      </td>
     </tr>
   <% end %>
   <tr>
     <td>Unassigned</td>
     <td class="centered">0</td>
     <td class="centered">0</td>
-    <td class="centered"><%= Issue.where(:person_id => nil).active.count %></td>
+    <td class="centered">
+      <%#= Issue.where(:person_id => nil).active.count %>
+      <%= link_to Issue.where(:person_id => nil).active.count, issuesnil_path('unassign') %>
+    </td>
   </tr>
 </table>

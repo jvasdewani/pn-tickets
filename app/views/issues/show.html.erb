@@ -39,7 +39,6 @@
     <%= render @issue.comments.ordered %>
   </div>
 
-
   <%= form_for @issue, html: { multipart: true } do |f| %>
     <%=hidden_field_tag('issue_time',@issue.issue_time)%>
     <% if @issue.task_list.present? && !@issue.task_list.tasks.empty? %>
@@ -112,7 +111,7 @@
           <h3>Would you like to reassign this ticket?</h3>
           <h5>Please select the person in your teams that will be responsible for this ticket.</h5>
           <p><%= f.label :department_id, 'Department:' %> <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name, :selected => @issue.department_id) %></p>
-          <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, '<option value=''>Unassigned</option>'.html_safe + options_from_collection_for_select(Person.ordered, :id, :abbr_name, :selected =>  (@comment.person_id.present?)? @issue.person_id : '') %></p>
+          <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, '<option value=''>Unassigned</option>'.html_safe + options_from_collection_for_select(Person.active.fullordered, :id, :abbr_name, :selected =>  (@comment.person_id.present?)? @issue.person_id : '') %></p>
         </div>
 
         <div class="field bordered" data-observe="client_select">

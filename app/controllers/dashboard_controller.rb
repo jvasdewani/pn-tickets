@@ -7,7 +7,7 @@ class DashboardController < ApplicationController
       redirect_to list_ticket_path
     end
     session[:referer] = nil
-   @issues = current_person.issues.active
+    @issues = current_person.issues.active
     @bulk_edit = MultiTicketEdit.new if current_person.admin?
     @search = Search.new
   end

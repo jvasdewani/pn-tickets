@@ -3,25 +3,38 @@ class IssuesController < ApplicationController
 
   def index
     session[:referer] = nil
-
-
-if params[:department_id].present?
-  @department = Department.find(params[:department_id])
-  @count = @department.issues.active.count
-  @issues = @department.issues.active.page params[:page]
-else
-    case params[:issues_status]
-      when 'opened'
-        @issues = Issue.opened.page params[:page]
-      when 'closed'
-        @issues = Issue.closed.page params[:page]
-      else
-        @issues = Issue.active.order('is_order Asc, id Desc').page params[:page]
+    
+    if params[:department_id].present?
+      @department = Department.find(params[:department_id])
+      @count = @department.issues.active.count
+      issues = @department.issues.active
+    elsif params[:status]
+      issues = Issue.where(:person_id => nil).active
+    elsif params[:issues_status]
+      case params[:issues_status]
+        when 'opened'
+          issues = current_person.issues.opened
+        when 'closed'
+          issues = current_person.issues.closed
+        when 'active'
+          issues = current_person.issues.active
+        else
+          issues = Issue.active
+      end
+    else
+      case params[:admin_status]
+        when 'opened'
+          issues = Issue.admin_opened(params[:id])
+        when 'closed'
+          issues = Issue.admin_closed(params[:id])
+        when 'active'
+          issues = Issue.active.admin_active(params[:id])
+        else
+          issues = Issue.active
+      end
     end
-end
-
-
-    @count  = @issues.count
+    @count  = issues.count
+    @issues = issues.page params[:page]
     @bulk_edit = MultiTicketEdit.new if current_person.admin?
     @search = Search.new
   end
@@ -37,7 +50,6 @@ end
 
   def create
     @issue = Issue.new(issue_params)
-    #render :text => params.inspect and return false
     if @issue.save
       CacheValue.perform_async(@issue.id)
       redirect_to issue_path(@issue)
@@ -50,7 +62,6 @@ end
     session[:referer] = request.referer if session[:referer].nil?
     @issue = Issue.find(params[:id])
     @comment = Comment.where(:issue_id => params[:id]).last
-    #return render text: @comment._ns
   end
 
   def show_ticket
@@ -60,7 +71,6 @@ end
  
   def update
     @issue = Issue.find(params[:id])
-    #return render text: params[:_ps]
     if @issue.update_attributes(issue_params)
       status = update_issue_status(issue_params)
       @issue.update_attributes(:status => status[:status_value], :is_order => status[:order_value], issue_time_cache: params[:issue_time]) 
@@ -147,10 +157,10 @@ end
     status = issue_params['comments_attributes'].to_a
     if status[0][1]['_ns'] == '10'
       status_value = 'resolved'
-      order_value = '5'
+      order_value = '4'
     elsif status[0][1]['_ns'] == '20'
       status_value = 'on_hold'
-      order_value = '4'
+      order_value = '3'
     elsif status[0][1]['_ns'] == '30'
       status_value = 'open'
       order_value = '2'

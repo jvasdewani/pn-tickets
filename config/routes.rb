@@ -17,7 +17,9 @@ Tickets::Application.routes.draw do
   get '/weekly_report' => 'issues#weekly', :as => 'weekly'
   get '/monthly_report' => 'issues#monthly', :as => 'monthly'
 
+  get 'issues/admin_status/:admin_status/:id' => 'issues#index', as: 'admin_status'
   get 'issues/status/:issues_status' => 'issues#index', as: 'issues_status'
+  get 'issues/admin/:status' => 'issues#index', as: 'issuesnil'
   resources :searches, only: [ :new, :create, :index ]
   resources :searches_client, only: [ :new, :create, :index ]
   resources :reports, only: [ :new, :create ]
