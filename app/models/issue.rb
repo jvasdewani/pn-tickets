@@ -9,7 +9,8 @@ class Issue < ActiveRecord::Base
 
   has_many :comments
   has_one :quote
-
+  validates_presence_of :subject, on: :create
+  
   scope :active, -> { where.not(status: 'resolved').order('updated_at Asc')}
   scope :closed, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'resolved')}
   scope :opened, -> { includes(:comments).where('comments.created_at' => (DateTime.now.utc.beginning_of_day..DateTime.now.utc.end_of_day)).where(status: 'open')}
