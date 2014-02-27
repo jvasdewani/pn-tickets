@@ -32,7 +32,7 @@
         <h5>Please select the person in your teams that will be responsible for this ticket.</h5>
         <p><%= f.label :department_id, 'Department:' %> <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name), :prompt => 'Select one' %></p>
         <%= f.hidden_field :person_id, :value => current_person.id %>
-        <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, options_from_collection_for_select(Person.ordered, :id, :abbr_name), :prompt => 'No-one' %></p>
+        <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, options_from_collection_for_select(Person.active.fullordered, :id, :abbr_name), :prompt => 'No-one' %></p>
       </div>
 
       <div class="field bordered" data-observe="client_select">
