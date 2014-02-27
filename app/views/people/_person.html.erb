@@ -1,6 +1,7 @@
 <%= div_for person do %>
 	<h2><%= person.full_name %></h2>
   <p><%= person.departments.collect { |d| d.department_name }.join(', ') %></p>
+  <p><%= person.is_active ? 'Active' : 'InActive' %></p>
 
 	<% if current_person.admin? || current_person.id == person.id %>
 		<div class="controls">

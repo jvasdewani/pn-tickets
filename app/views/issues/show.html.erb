@@ -22,12 +22,12 @@
   <h2><%= @issue.department.department_name unless @issue.department.nil? %> <%= "(#{@issue.product_type.name})" unless @issue.product_type.nil? %></h2>
 
   <div class="assignment">
-    <% if @comment.person_id %>
-      <p><%= ticket_assignment @issue %></p>
-    <% else %>
-      <p><%= ticket_assignment @comment %></p>
-    <% end %>
-    <%#= Time.now %>
+    <p><%= ticket_assignment @issue %></p>
+    <%# if @comment.person_id %>
+      <p><%#= ticket_assignment @issue %></p>
+    <%# else %>
+      <p><%#= ticket_assignment @comment %></p>
+    <%# end %>
     <p>Ticket time: <strong><%= time_display @issue.issue_time %></strong></p>
     
   </div>
@@ -111,7 +111,7 @@
           <h3>Would you like to reassign this ticket?</h3>
           <h5>Please select the person in your teams that will be responsible for this ticket.</h5>
           <p><%= f.label :department_id, 'Department:' %> <%= f.select :department_id, options_from_collection_for_select(Department.ordered, :id, :department_name, :selected => @issue.department_id) %></p>
-          <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, '<option value=''>Unassigned</option>'.html_safe + options_from_collection_for_select(Person.active.fullordered, :id, :abbr_name, :selected =>  (@comment.person_id.present?)? @issue.person_id : '') %></p>
+          <p><%= f.label :person_id, 'Agent:' %> <%= f.select :person_id, '<option value=''>Unassigned</option>'.html_safe + options_from_collection_for_select(Person.active.fullordered, :id, :abbr_name, :selected =>  (@issue.person_id) ? @issue.person_id : '') %></p>
         </div>
 
         <div class="field bordered" data-observe="client_select">

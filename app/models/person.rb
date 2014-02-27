@@ -19,6 +19,7 @@ class Person < ActiveRecord::Base
   scope :managers, -> { where(manager: true) }
   scope :active, -> { where(is_active: true) }
   scope :scoreboard, -> { where(show_on_scoreboard: true) }
+  scope :ordered_is_active_desc, -> { order(:is_active => :desc) }
 
   accepts_nested_attributes_for :assignments, :reject_if => :new_record?, :allow_destroy => true
 

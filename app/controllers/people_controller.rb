@@ -2,7 +2,7 @@ class PeopleController < ApplicationController
   before_filter :require_login!
 
   def index
-    @people = Person.ordered
+    @people = Person.ordered_is_active_desc
   end
 
   def new
