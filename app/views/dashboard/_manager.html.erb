@@ -12,11 +12,11 @@
       <td><%= person.full_name %></td>
       <td class="centered">
         <%#= PersonScore.new(person.id, 'opened').score %>
-        <%= link_to person.issues.admin_opened(person.id).count, admin_status_path('opened', person.id) %>
+        <%= link_to PersonScore.new(person.id, 'opened').score, admin_status_path('opened', person.id) %>
       </td>
       <td class="centered">
         <%#= PersonScore.new(person.id, 'closed').score %>
-        <%= link_to person.issues.admin_closed(person.id).count, admin_status_path('closed', person.id) %>
+        <%= link_to PersonScore.new(person.id, 'closed').score, admin_status_path('closed', person.id) %>
       </td>
       <td class="centered">
         <%#= person.issues.active.count %>
