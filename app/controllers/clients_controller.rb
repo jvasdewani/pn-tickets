@@ -106,8 +106,11 @@ class ClientsController < ApplicationController
   end
   
   def check_validation(person)
+    person_exist = Person.find_by_username(person.username)
     if person.username.blank?
       person.errors.add :base, "Username required"
+    elsif person_exist
+      person.errors.add :base, "Username already exist"  
     elsif person.password.blank?
       person.errors.add :base, "Password required"
     elsif person.password_confirmation.blank?

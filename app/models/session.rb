@@ -26,9 +26,11 @@ class Session
 
   def persist!
     # begin
-      @person = Person.find_by(username: username)
-      authenticator = PasswordAuthenticator.new(@person)
-      return authenticator.authenticate(password)
+      @person = Person.find_by_username(username)
+      if @person
+        authenticator = PasswordAuthenticator.new(@person)
+        return authenticator.authenticate(password)
+      end
     # rescue
     #   return false
     # end
