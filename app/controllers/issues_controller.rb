@@ -132,12 +132,13 @@ class IssuesController < ApplicationController
               @issues = issues.page params[:page]
 	    else
 	     start_date = params[:search][:start_date]
-       end_date = params[:search][:end_date]
+         end_date = params[:search][:end_date]
 	     
 	     issues = Issue.select("DISTINCT issues.*").includes(:comments).where('comments.created_at' => (start_date..end_date))
-       issues = issues.where(client_id: clients.id)
-	     issues = issues.where(:department_id => params[:search][:department]) unless params[:search][:department].blank?
-	     issues = issues.where(:product_type_id => params[:search][:product_type]) unless params[:search][:product_type].blank?
+         issues = issues.where(client_id: clients.id)
+	   
+		 issues = issues.where(:department_id => params[:search][:department]) unless params[:search][:department].blank? || params[:search][:department] == 'All'
+	     issues = issues.where(:product_type_id => params[:search][:product_type]) unless params[:search][:product_type].blank? || params[:search][:product_type] == 'All'
 	     issues = issues.where(:status => params[:search][:status]) unless params[:search][:status].blank?
 	     @issues = issues.page params[:page]
 	    end
