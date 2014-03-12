@@ -91,6 +91,7 @@ class FailingChecks
         end
       end
     else
+=begin
       if already_logged.first.status == 'on_hold' || already_logged.first.status == 'resolved'
         p "#{Time.now.to_s} - Issue re-logged for #{check['checkid']}"
         issue = Issue.create do |i|
@@ -123,6 +124,7 @@ class FailingChecks
       else
         p "#{Time.now.to_s} - Skipping #{check['checkid']} already logged as #{already_logged.first.issue_no}"
       end
+=end
     end
   end
 
