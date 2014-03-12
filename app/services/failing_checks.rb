@@ -12,10 +12,14 @@ class FailingChecks
         contact = branch.contacts.create(:forename => 'Prime', :surname => 'Networks') if !contact
 
         department = Department.where(:department_name => 'Proactive').first
-        department = Department.create(:department_name => 'Proactive') if department.nil?
+        if department.nil?
+          department = Department.create(:department_name => 'Proactive')
+        end
 
         product = ProductType.where(:name => 'IT').first
-        product = ProductType.create(:name => 'IT') if product.nil?
+        if product.nil?
+          product = ProductType.create(:name => 'IT')
+        end
 
         agent = department.people.where(:forename => 'Prime').where(:surname => 'Networks').first
 

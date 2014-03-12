@@ -17,17 +17,17 @@ class HealthChecks
       if hc.health_check_person.present?
         person = Person.find(hc.health_check_person)
       else
-        person = Person.first
+        person = nil
       end
 
       comment = Comment.new
-      comment.person = person
+      comment.person = person if person.present?
       comment._ns = 40
       comment._np = 20
 
       issue = Issue.new
       issue.subject = "Health Check (#{client.check_date})"
-      issue.person = person
+      issue.person = person if person.present?
       issue.department = department
       issue.client = client
       issue.comments << comment
