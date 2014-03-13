@@ -10,7 +10,7 @@ class PaymentOrdersController < ApplicationController
   end
 
   def create
-    @payment_order = PaymentOrder.new(params[:payment_order])
+    @payment_order = PaymentOrder.new(payment_order_params)
     if @payment_order.save
       redirect_to payment_orders_path
     else
@@ -24,7 +24,7 @@ class PaymentOrdersController < ApplicationController
 
   def update
     @payment_order = PaymentOrder.find(params[:id])
-    if @payment_order.update_attributes(params[:payment_order])
+    if @payment_order.update_attributes(payment_order_params)
       redirect_to payment_orders_path
     else
       render :action => :edit
@@ -71,5 +71,9 @@ class PaymentOrdersController < ApplicationController
     @payment_order = PaymentOrder.find(params[:id])
     @payment_order.supplier_payment_received!
     redirect_to :back
+  end
+  
+  def payment_order_params
+    params.require(:payment_order).permit!
   end
 end

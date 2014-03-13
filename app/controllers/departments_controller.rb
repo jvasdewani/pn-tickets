@@ -7,12 +7,12 @@ class DepartmentsController < ApplicationController
 
   def new
     @department = Department.new
-    @department.build_task_list
-    @department.task_list.tasks.build
   end
 
   def create
     @department = Department.new(department_params)
+    @department.build_task_list
+    @department.task_list.tasks.build
     if @department.save
       redirect_to departments_path
     else
@@ -22,14 +22,14 @@ class DepartmentsController < ApplicationController
 
   def edit
     @department = Department.find(params[:id])
-    if @department.task_list.nil?
-      @department.build_task_list
-      @department.task_list.tasks.build
-    end
   end
 
   def update
     @department = Department.find(params[:id])
+    if @department.task_list.nil?
+      @department.build_task_list
+      @department.task_list.tasks.build
+    end
     if @department.update_attributes(department_params)
       redirect_to departments_path
     else
