@@ -22,16 +22,29 @@ class FailingChecks
         end
 
         agent = department.people.where(:forename => 'Prime').where(:surname => 'Networks').first
+        if c['site'].kind_of? Array
+                c['site'].each do |site|
+                        if site.has_key?('servers') && !site['servers'].nil?
+                          server = site['servers']['server']
 
-        if c['site'].has_key?('servers') && !c['site']['servers'].nil?
-          server = c['site']['servers']['server']
+                                      if server.kind_of? Hash
+                                        process(server, client, branch, contact, department, product, agent)
+                                      else
+                                        server.each { |s| process(s, client, branch, contact, department, product, agent) }
+                                      end
+                        end
+              end
+        else
+            if c['site'].has_key?('servers') && !c['site']['servers'].nil?
+              server = c['site']['servers']['server']
 
-          if server.kind_of? Hash
-            process(server, client, branch, contact, department, product, agent)
-          else
-            server.each { |s| process(s, client, branch, contact, department, product, agent) }
-          end
-        end
+              if server.kind_of? Hash
+                process(server, client, branch, contact, department, product, agent)
+              else
+                server.each { |s| process(s, client, branch, contact, department, product, agent) }
+              end
+            end
+        end    
 
       else
         puts "#{Time.now.to_s} - Couldn't find #{c['name']}"
