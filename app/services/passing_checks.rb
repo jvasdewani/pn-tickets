@@ -14,7 +14,12 @@ class PassingChecks
         department = Department.where(:department_name => 'Proactive').first
         agent = department.people.where(:forename => 'Prime').where(:surname => 'Networks').first
 
-        create_ticket(client, branch, contact, department, agent)
+        product = ProductType.where(:name => 'IT').first
+        if product.nil?
+          product = ProductType.create(:name => 'IT')
+        end
+
+        create_ticket(client, branch, contact, department, agent, product)
 
       else
         puts "#{Time.now.to_s} - Couldn't find #{c['name']}"
@@ -22,7 +27,7 @@ class PassingChecks
     end
   end
 
-  def create_ticket(client, branch, contact, department, agent)
+  def create_ticket(client, branch, contact, department, agent, product)
     puts "======= Creating ticket for client(id): #{client.id}"
     
     p "#{Time.now.to_s} - Issue logged for #{client.company}"
@@ -37,6 +42,7 @@ class PassingChecks
       i.response_time_cache = 0
       i.issue_time_cache = 300
       i.checkid = 'passcheck'
+      i.product_type = product
       i.comments.build do |m|
         m.person = agent
         m.content = "Checks have passed"
