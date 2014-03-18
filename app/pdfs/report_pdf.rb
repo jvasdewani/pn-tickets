@@ -31,7 +31,8 @@ class ReportPdf < Prawn::Document
   def issue_rows
     [["", "Client Company", "Client User", "Subject", "Date", "Resp", "Total", "Status", "Agent", "Type"]] +
     @report.documents.map do |issue|
-      [issue.issue_no, "#{issue.client.company unless issue.client.nil?} (#{issue.client.group unless issue.client.nil?})", "#{issue.contact.forename unless issue.contact.nil?}", issue.subject, issue.created_at.strftime('%d %b, %y'), display_time(issue.response_time), display_time(issue.issue_time), issue.status.titleize, (issue.person ? issue.person.abbr_name : ''), (issue.product_type ? issue.product_type.name : '')]
+      [issue.issue_no, "#{issue.client.company unless issue.client.nil?} (#{issue.client.group unless issue.client.nil?})", 
+		"#{issue.contact.forename unless issue.contact.nil?} #{issue.contact.surname unless issue.contact.nil?}", issue.subject, issue.created_at.strftime('%d %b, %y'), display_time(issue.response_time), display_time(issue.issue_time), issue.status.titleize, (issue.person ? issue.person.abbr_name : ''), (issue.product_type ? issue.product_type.name : '')]
     end
   end
 

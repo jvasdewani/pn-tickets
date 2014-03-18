@@ -8,7 +8,7 @@ class GenerateReport
     pdf = ReportPdf.new @report
     pdf.render_file("/var/app/pdfs/#{uuid}.pdf")
 
-    client = Faye::Client.new('http://0.0.0.0:9292/faye')
+    client = Faye::Client.new('http://192.168.20.3:9292/faye')
     client.publish("/#{uuid}", 'pdf' => "/pdfs/#{uuid}.pdf")
   end
 end
