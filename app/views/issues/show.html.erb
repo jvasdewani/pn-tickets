@@ -171,7 +171,8 @@
             .find("option")
             .show()
             .not("option[value='1']").hide();
-            $("#issue_product_type_id").val($("#issue_product_type_id").find("option:visible:first").val());
+            //$("#issue_product_type_id").val($("#issue_product_type_id").find("option:visible:first").val());
+            $('#issue_product_type_id').find("option[value='1']").prop("selected", "selected");
         }
         else
         {
