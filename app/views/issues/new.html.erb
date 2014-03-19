@@ -70,16 +70,19 @@
   $(document).ready(function() {
     $("#issue_department_id").change(function () {
         if (this.value == '5') {
-        $("#issue_product_type_id")
+          $("#issue_product_type_id")
             .find("option")
             .show()
             .not("option[value='1']").hide();
+            $('#issue_product_type_id').find("option[value='1']").prop("selected", "selected");
         }
         else
         {
             $('#issue_product_type_id').find("option").show();
+            $('#issue_product_type_id').find("option[value='']").prop("selected", "selected");
         }
 
     }).change();
+    
   });
 </script>
